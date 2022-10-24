@@ -7,6 +7,8 @@ export default async function handler(req, res) {
     const {name,email,password,phone,role,address}=req.body
     if (req.method === "POST") {
        
+        let isEmailUnique=await User.findOne({email:email})
+        if(!isEmailUnique){
       // Encrypting password
         let encyPass = AES.encrypt(password, process.env.JWT_SECRET).toString();
         try{
@@ -17,6 +19,11 @@ export default async function handler(req, res) {
         catch(err){
             res.status(200).send({ success:false,error: err.message })
         }
+    }
+
+    else{
+        res.status(200).send({ success:false,error:"Email already exists" })
+    }
     
     }
 

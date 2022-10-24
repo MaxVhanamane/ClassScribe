@@ -1,24 +1,19 @@
 import React, { useState } from 'react'
 import connectDb from './../middleware/mongoose';
-// import AttendanceRecord from '../models/attendancerecord';
-import Student from '../models/students';
+import AttendanceRecord from '../models/attendancerecord';
 import { jsPDF } from "jspdf";
 import DatePicker from "react-datepicker";
 import autoTable from 'jspdf-autotable';
 import "react-datepicker/dist/react-datepicker.css";
 export default function Attendancerecord({allStudents,classNameValue}) {
-   const [data,setData]=useState([])
-   const [studentDetails,setStudentDetails]=useState(allStudents)
+   const [data,setData]=useState(allStudents)
    const [startDate, setStartDate] = useState(new Date());
    const [endDate, setEndDate] = useState(new Date());
-
-
-let dates=data.map((item)=>{
-    return parseInt(new Date(item.date).toLocaleDateString("en-GB").split("/")[0])
-   })
-
-   let uniqueDates=[...new Set(dates.sort())];
-
+//   console.log(startDate)
+//   console.log("start",new Date(startDate).toISOString().substring(0, 10))
+//   console.log("end",new Date(endDate).toISOString().substring(0, 10))
+//    console.log("endDate",endDate.toLocaleDateString().slice(0,10))
+//   console.log("startdate",startDate.toLocaleDateString().slice(0,10))
 
   const getData=async()=>{
     let sDate=new Date(startDate).toISOString().substring(0, 10)+"T00:00:00Z"
@@ -32,15 +27,24 @@ let dates=data.map((item)=>{
         body: JSON.stringify(data),
       })
       let studentsData=await res.json()
-      setData(()=>studentsData.students)
+      setData((d)=>studentsData.students)
   }
 
   const getPdf=async()=>{
-    let doc = new jsPDF("l","pt","a3");
+    let doc = new jsPDF("l","pt","a4");
     autoTable(doc,{html:"#table_pdf",theme:"grid"})
     let fileName=`class-${classNameValue}-Attendance`
     doc.save(fileName);
     
+// doc.html(document.querySelector("#table_pdf"), {
+//    callback: function (doc) {
+//      doc.save("max");
+//    },
+//    x:50,
+//    y:10,
+//    width: 1000,
+//    windowWidth: 1000,
+// });
   }
   return (
     <>
@@ -49,14 +53,14 @@ let dates=data.map((item)=>{
        
         <p className='my-auto mx-2 md:mx-auto'>Start Date:</p>
         <div>
-          <DatePicker dateFormat="dd/MM/yyyy" className='bg-gray-100 text-center m-2 border-2 rounded border-gray-700' selected={startDate} onChange={(date) => setStartDate(date)} />
+          <DatePicker className='bg-gray-100 text-center m-2 border-2 rounded border-gray-700' selected={startDate} onChange={(date) => setStartDate(date)} />
           </div>
           </div>
 
           <div className='flex flex-col md:flex-row '>
         <p className='my-auto mx-2 md:mx-auto'>End Date:</p>
         <div>
-          <DatePicker dateFormat="dd/MM/yyyy" className='bg-gray-100  text-center m-2 border-2 rounded border-gray-700' selected={endDate} onChange={(date) => setEndDate(date)} />
+          <DatePicker className='bg-gray-100  text-center m-2 border-2 rounded border-gray-700' selected={endDate} onChange={(date) => setEndDate(date)} />
           </div>
           </div>
       <div className='flex mt-2 md:mt-auto'> 
@@ -92,22 +96,20 @@ let dates=data.map((item)=>{
                     Name
                 </th>
                 
-                {/* <th scope="col" className="py-3 px-2 text-center">
+                <th scope="col" className="py-3 px-2 text-center">
                     P/A
                 </th>
                 <th scope="col" className="py-3 px-2 text-center">
                     Att. Date
-                </th> */}
+                </th>
                
-                {uniqueDates.map((item)=>{
-                return   <th key={item} scope="col" className="py-3 px-2 text-center"> {item} </th>
-               })}
+               
              
             </tr>
         </thead>
         <tbody>
         {/* data.sort((a,b)=>{return new Date(a.date) - new Date(b.date) }) */}
-            {/* { data.sort((d,e)=>{return d.rollNumber-e.rollNumber }).map((item,index)=>{
+            { data.sort((d,e)=>{return d.rollNumber-e.rollNumber }).map((item,index)=>{
                 return <tr key={index} className="bg-white border-border-collapse   dark:bg-gray-800 dark:border-gray-700">
            
                  <td className="py-4 px-2 text-center">
@@ -142,57 +144,6 @@ let dates=data.map((item)=>{
              
             </tr>
       
-            })} */}
-
-
-
-
-{ studentDetails.sort((d,e)=>{return d.rollNumber-e.rollNumber }).map((item,index)=>{
-                return <tr key={index} className="bg-white border-border-collapse   dark:bg-gray-800 dark:border-gray-700">
-           
-                 <td className="py-4 px-2 text-center">
-                    {index+1}
-                </td>
-                 <td className="py-4 px-2 text-center">
-                    {item.genRegNumber}
-                </td>
-                 <td className="py-4 px-2 text-center">
-                    {new Date(item.DOB).toLocaleDateString('en-GB')}
-                </td>
-                <td className="py-4 px-2 text-center">
-                    {item.caste}
-                </td>
-                <td className="py-4 px-2 text-center">
-                    {item.subCaste}
-                </td>
-                 <td className="py-4 px-2 text-center">
-                 {item.rollNumber}
-                </td>
-                <td className="py-4 px-2 text-center">
-                    {item.name}
-                </td>
-                {/* // Turn your strings into dates, and then subtract them
-  // to get a value that is either negative, positive, or zero. */}
-        {/* {     console.log(  data.filter(x => { return x.name === item.name }).sort(function(a,b){
- 
-  return new Date(a.date) - new Date(b.date);
-}))} */}
-
-                {/* {console.log(data.filter(x => { return x.name === item.name }))} */}
-               
-{data.filter(x => { return x.name === item.name }).sort(function(a,b){
- 
- return new Date(a.date) - new Date(b.date);
-}).map((i,index)=>{
-    return <td key={index} className="py-4 px-2 text-center">
-              {i.attendance}     
-    </td>
-})}
-                
-            
-             
-            </tr>
-      
             })}
            
         </tbody>
@@ -212,9 +163,7 @@ export async function getServerSideProps(context) {
     let classNameValue = (context.query.className);
     let division = (context.query.division);
 
-    // let attendanceRecord = await AttendanceRecord.find({className:classNameValue,division:division})
-    // attendaceRecord:JSON.parse(JSON.stringify(attendanceRecord)),
+    let students = await AttendanceRecord.find({className:classNameValue,division:division})
 
-    let studentNames = await Student.find({className:classNameValue,division:division})
-    return { props: {allStudents:JSON.parse(JSON.stringify(studentNames)),classNameValue:classNameValue } }
+    return { props: { allStudents:JSON.parse(JSON.stringify(students)),classNameValue:classNameValue } }
   }

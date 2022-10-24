@@ -1,6 +1,5 @@
 import React,{useState,useEffect} from 'react'
 import { useRef } from 'react';
-
 import { useRouter } from 'next/router';
 import Head from "next/head";
 import DashboardSidebar from '../../components/DashboardSidebar';
@@ -8,18 +7,20 @@ import { toast } from 'react-toastify';
 
 
 export default function AddStudent() {
-const [uploading,setUploading]=useState(false)
 const [studentDetails,setStudentDetails]=useState({
-    
-        name: "",
-        email: "",
-        className: "",
-        division:"",
-        rollNumber: "",
+  name: "",
+  email: "",
+  phone:"",
+  className: "",
+  division:"",
+  rollNumber: "",
+  genRegNumber:"",
+  DOB:"",
+  caste:"",
+  subCaste:""
        
       
 })
-
 
 
 // const router=useRouter()
@@ -97,7 +98,43 @@ const handleChange=(e)=>{
                rollNumber:e.target.value 
         })
     }
+  
+    else if(e.target.name==="phone"){
+ setStudentDetails({
+               ...studentDetails  ,
+               phone:e.target.value 
+        })
+    }
 
+  
+    else if(e.target.name==="genRegNumber"){             
+ setStudentDetails({
+               ...studentDetails  ,
+               genRegNumber:e.target.value 
+        })
+    }
+  
+    else if(e.target.name==="DOB"){
+ setStudentDetails({
+               ...studentDetails  ,
+               DOB:e.target.value 
+        })
+    }
+  
+    else if(e.target.name==="caste"){
+ setStudentDetails({
+               ...studentDetails  ,
+               caste:e.target.value 
+        })
+    }
+  
+    else if(e.target.name==="subCaste"){
+ setStudentDetails({
+               ...studentDetails  ,
+               subCaste:e.target.value 
+        })
+    }
+  
     
 }
 
@@ -106,7 +143,7 @@ const handleChange=(e)=>{
 
 
  const handleAdd=async()=>{
-    const data = {name:studentDetails.name,email:studentDetails.email,className:studentDetails.className,division:studentDetails.division,rollNumber:studentDetails.rollNumber};
+    const data = {name:studentDetails.name,email:studentDetails.email,className:studentDetails.className,division:studentDetails.division,rollNumber:studentDetails.rollNumber,phone:studentDetails.phone,genRegNumber:studentDetails.genRegNumber,DOB:new Date(studentDetails.DOB),caste:studentDetails.caste,subCaste:studentDetails.subCaste};
      
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/addstudent`, {
@@ -131,9 +168,14 @@ const handleChange=(e)=>{
     ...studentDetails,
     name: "",
     email: "",
+    phone:"",
     className: "",
     division:"",
     rollNumber: "",
+    genRegNumber:"",
+    DOB:"",
+    caste:"",
+    subCaste:""
 })
 
     }
@@ -146,7 +188,7 @@ const handleChange=(e)=>{
        footer{
         display:none;
        }
-       nav{
+       #nav{
         display:none;
        }
       `}</style>
@@ -155,7 +197,8 @@ const handleChange=(e)=>{
     <meta name="description" content="Add a food item" />
    </Head>
    <DashboardSidebar/>
-    <div className="lg:ml-60 sticky top-0 bg-[#f9fafb] z-10">
+ 
+    <div className="lg:ml-60 sticky top-0 bg-violet-900 z-10">
     <div className="  p-3 font-bold md:text-3xl text-2xl  mx-auto text-center shadow  text-gray-50 bg-violet-900 drop-shadow mb-8 "><h1 className="text-center mx-auto">Add a student</h1></div></div>
     <div className='lg:ml-28 p-6  pt-6 flex justify-center w-full'>
     
@@ -200,6 +243,26 @@ const handleChange=(e)=>{
           m-0
           focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="email"
           placeholder="Enter a parent's mail id"/>
+      </div>
+
+      <div className="form-group mb-6">
+        <label htmlFor="phone"  className="formLabel inline-block mb-2 text-gray-700">Phone</label>
+        <input onChange={handleChange} value={studentDetails.phone} name="phone" type="number" className="form-control
+          block
+          w-full
+          px-3
+          py-1.5
+          text-base
+          font-normal
+          text-gray-700
+          bg-white bg-clip-padding
+          border border-solid border-gray-300
+          rounded
+          transition
+          ease-in-out
+          m-0
+          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="phone"
+          placeholder="Enter the phone number"/>
       </div>
       
      
@@ -263,6 +326,91 @@ const handleChange=(e)=>{
           m-0
           focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="rollnumber"
           placeholder="Enter a roll number"/>
+      </div>
+      
+     
+     
+      <div className="form-group mb-6">
+        <label htmlFor="genRegNumber"  className="formLabel inline-block mb-2 text-gray-700">General register number</label>
+        <input onChange={handleChange} value={studentDetails.genRegNumber} name="genRegNumber" type="number" className="form-control
+          block
+          w-full
+          px-3
+          py-1.5
+          text-base
+          font-normal
+          text-gray-700
+          bg-white bg-clip-padding
+          border border-solid border-gray-300
+          rounded
+          transition
+          ease-in-out
+          m-0
+          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="genRegNumber"
+          placeholder="Enter general register number"/>
+      </div>
+     
+     
+      <div className="form-group mb-6">
+        <label htmlFor="DOB"  className="formLabel inline-block mb-2 text-gray-700">Date of birth</label>
+        <input onChange={handleChange} value={studentDetails.DOB} name="DOB" type="date" className="form-control
+          block
+          w-full
+          px-3
+          py-1.5
+          text-base
+          font-normal
+          text-gray-700
+          bg-white bg-clip-padding
+          border border-solid border-gray-300
+          rounded
+          transition
+          ease-in-out
+          m-0
+          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="DOB"
+          placeholder="Enter date of birth"/>
+      </div>
+      
+     
+      <div className="form-group mb-6">
+        <label htmlFor="caste"  className="formLabel inline-block mb-2 text-gray-700">Caste</label>
+        <input onChange={handleChange} value={studentDetails.caste} name="caste" type="text" className="form-control
+          block
+          w-full
+          px-3
+          py-1.5
+          text-base
+          font-normal
+          text-gray-700
+          bg-white bg-clip-padding
+          border border-solid border-gray-300
+          rounded
+          transition
+          ease-in-out
+          m-0
+          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="caste"
+          placeholder="Enter caste"/>
+      </div>
+      
+     
+      <div className="form-group mb-6">
+        <label htmlFor="subCaste"  className="formLabel inline-block mb-2 text-gray-700">Subcast</label>
+        <input onChange={handleChange} value={studentDetails.subCaste} name="subCaste" type="text" className="form-control
+          block
+          w-full
+          px-3
+          py-1.5
+          text-base
+          font-normal
+          text-gray-700
+          bg-white bg-clip-padding
+          border border-solid border-gray-300
+          rounded
+          transition
+          ease-in-out
+          m-0
+          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="subCaste"
+          placeholder="Enter subcaste"/>
       </div>
       
      

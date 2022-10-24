@@ -32,7 +32,10 @@ const [data,setData]=useState(allStudents)
         });
   }
 
-   const data2 = {name:studentInfo.name,email:studentInfo.email,className:studentInfo.className,division:studentInfo.division,rollNumber:studentInfo.rollNumber,attendance:attendance,date:new Date().toLocaleDateString(),time:new Date().toLocaleTimeString()};
+   const studentInformation = {name:studentInfo.name,email:studentInfo.email,className:studentInfo.className,division:studentInfo.division,rollNumber:studentInfo.rollNumber,attendance:attendance,date:new Date().toISOString(),time:new Date().toLocaleTimeString(),
+  genRegNumber:studentInfo.genRegNumber,caste:studentInfo.caste,subCaste:studentInfo.subCaste,DOB:studentInfo.DOB,phone:studentInfo.phone
+  
+  };
      
 
    const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/addattendance`, {
@@ -40,10 +43,9 @@ const [data,setData]=useState(allStudents)
      headers: {
        'Content-Type': 'application/json',
      },
-     body: JSON.stringify(data2),
+     body: JSON.stringify(studentInformation),
    })
    const fresponse = await response.json()
-   console.log(fresponse)
   }
 
   return (
@@ -96,17 +98,17 @@ const [data,setData]=useState(allStudents)
                     {item.email}
                 </td>
                 <td className="py-4 px-2">
-                <button onClick={(e)=>{handleClick(e.target.value,item)} }className=" bg-green-600 hover:bg-green-700 text-white rounded p-1 px-2" value="present" >Present</button>
+                <button onClick={(e)=>{handleClick(e.target.value,item)} }className=" bg-emerald-600 hover:bg-emerald-700 text-white rounded p-1 px-2 hover:shadow" value="P" >Present</button>
                 </td>
                 <td className="py-4 px-2">
-                <button onClick={(e)=>{handleClick(e.target.value,item)} } className="bg-red-500 hover:bg-red-600 text-white rounded p-1 px-2" value="absent">Absent</button>
+                <button onClick={(e)=>{handleClick(e.target.value,item)} } className="bg-red-500 hover:bg-red-600 hover:shadow text-white rounded p-1 px-2" value="A">Absent</button>
                 </td>
             </tr>
             })}
            
         </tbody>
     </table>
-</div>:<div className="flex justify-center items-center shadow-sm my-20 p-10 text-red-500">No Student data found! Please add Students. </div>}
+</div>:<div className="flex justify-center items-center shadow-sm my-20 p-10 text-red-500">No Student records found! Please add Students. </div>}
 
 
 
@@ -156,7 +158,7 @@ export async function getServerSideProps(context) {
     let division = (context.query.division);
 
     let students = await Student.find({className:className,division:division})
-    
+ 
     return { props: { allStudents:JSON.parse(JSON.stringify(students)),className:className } }
   }
   

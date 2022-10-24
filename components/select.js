@@ -21,9 +21,9 @@ export default function Select({allStudents}) {
 
 
   <div  className='mt-6'> 
-<label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 text-center">Select the Class</label>
+<label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900  text-center">Select the Class</label>
 <div className='mt-2'>
-<select className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+<select className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
   value={selectClass}
   defaultValue={"default"}
   onChange={(e) => setSelectClass(e.target.value) }
@@ -40,9 +40,9 @@ export default function Select({allStudents}) {
 </div>
 
   <div  className='mt-8'> 
-<label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 text-center">Select the Division</label>
+<label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900  text-center">Select the Division</label>
 <div className='mt-2'>
-<select className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+<select className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
   value={divisionName}
   defaultValue={"default"}
   onChange={(e) => {setDivisionName(e.target.value) }}

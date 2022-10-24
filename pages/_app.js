@@ -2,6 +2,9 @@ import '../styles/globals.css'
 import Navbar from './../components/Navbar';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AuthState from "./../context/AuthState";
+import Layout from "./../components/Layout";
+
 function MyApp({ Component, pageProps }) {
   return<>
        <ToastContainer
@@ -15,7 +18,12 @@ function MyApp({ Component, pageProps }) {
     draggable
     pauseOnHover
   />
-   <Navbar/> <Component {...pageProps} /></>
+  <AuthState>
+    <Layout>
+   <Navbar/> <Component {...pageProps} />
+   </Layout>
+   </AuthState>
+   </>
 }
 
 export default MyApp

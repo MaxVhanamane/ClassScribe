@@ -1,7 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import { useRef } from 'react';
 
-import { useRouter } from 'next/router';
 import Head from "next/head";
 import DashboardSidebar from '../../components/DashboardSidebar';
 import { toast } from 'react-toastify';
@@ -13,7 +11,7 @@ const [teacherDetails,setTeacherDetails]=useState({
         name: "",
         email: "",
         password: "",
-        roll: "",
+        role: "",
         address:"",
         phone: "",
        
@@ -114,7 +112,6 @@ const handleChange=(e)=>{
 
  const handleAdd=async()=>{
     const data = {name:teacherDetails.name,email:teacherDetails.email,role:teacherDetails.role,address:teacherDetails.address,password:teacherDetails.password,phone:teacherDetails.phone};
-     
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/addteacher`, {
       method: 'POST', // or 'PUT'
@@ -144,6 +141,16 @@ const handleChange=(e)=>{
     phone: "",
 })
 
+    }
+    else{
+      toast.error(response.error, {
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
 
     }
@@ -273,7 +280,7 @@ const handleChange=(e)=>{
       
       <div className="form-group mb-6">
         <label htmlFor="phone"  className="formLabel inline-block mb-2 text-gray-700">Phone number</label>
-        <input onChange={handleChange} value={teacherDetails.phone} name="phone" type="text" className="form-control
+        <input onChange={handleChange} value={teacherDetails.phone} name="phone" type="number" className="form-control
           block
           w-full
           px-3

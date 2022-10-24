@@ -5,7 +5,12 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        // Bounces 5 times 1s equals 5 seconds
+        'pulse': 'pulse 1s ease-in-out 2'
+      }
+    },
   },
   plugins: [],
 }

@@ -3,12 +3,18 @@ const nodemailer=require("nodemailer")
 
 export default async function handler(req, res) {
     const {name,email,attendance}=req.body
+    let attendanceValue
+    if(attendance==="P"){
+      attendanceValue="present"
+    }
+    else
+    {attendanceValue="absent"}
 
     let message = {
         from: "oreo.max.1998@gmail.com",
         to: email,
         subject: "Attendance",
-        text: `Your son/daughter ${name} is ${attendance}`,
+        text: `Your son/daughter ${name} is ${attendanceValue}`,
         // html: "<p>HTML version of the message</p>"
       };
   
@@ -25,7 +31,6 @@ export default async function handler(req, res) {
   
       try{
         let data= await tr.sendMail(message)
-        console.log("email sent")
         return res.status(200).json({success:true})
 
 

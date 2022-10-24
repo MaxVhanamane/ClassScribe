@@ -8,12 +8,17 @@ export default async function handler(req, res) {
             let attendance = new AttendanceRecord({
                 name: req.body.name,
                 email: req.body.email, 
+                phone:req.body.phone,
                 className: req.body.className,
                 division: req.body.division,
                 rollNumber: req.body.rollNumber,
                 attendance: req.body.attendance,
                 date: req.body.date,
                 time: req.body.time,
+                genRegNumber:req.body.genRegNumber,
+                caste:req.body.caste,
+                subCaste:req.body.subCaste,
+                DOB:req.body.DOB
             })
             await attendance.save()
         

@@ -1,4 +1,4 @@
-import React ,{useContext,useRef} from 'react'
+import React ,{useContext,useRef,useEffect,useState} from 'react'
 import Link  from 'next/link';
 import { IoIosAddCircle } from "react-icons/io";
 import { BsFillEyeFill } from "react-icons/bs";
@@ -9,17 +9,29 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { AiFillHome } from "react-icons/ai";
 import { useRouter } from 'next/router';
 
-// import { CartContext } from './../context/CartState';
+import { AuthContext } from './../context/AuthState';
 export default function DashboardSidebar() {
    const router=useRouter()
    const currentPath=router.pathname
-//    const {
-     
-//       removeToken,
-    
-//       clearCart,
+   const {
+     removeToken
       
-//     } = useContext(CartContext);
+    } = useContext(AuthContext);
+
+    const [token,setToken]=useState(null)
+    const [role,setRole]=useState(null)
+
+      
+   useEffect(()=>{
+      let [token,role]=[localStorage.getItem("token"),localStorage.getItem("role")]
+      if(token && role=="admin"){
+         setToken(token)
+         setRole(role)
+      }
+
+   },[])
+
+
 
     const dashBoardToggler = useRef();
   const toggleSidebar = () => {
@@ -81,20 +93,29 @@ export default function DashboardSidebar() {
             </a>
          </li>
          </Link>
-          <Link href="/dashboard/addteacher">
+        { token && role==="admin"&& <Link href="/dashboard/addteacher">
          <li  onClick={toggleSidebar} >
          <a  className={`cursor-pointer flex items-center p-2 ${currentPath=="/dashboard/addteacher" ? "text-violet-600" : 'text-gray-500' }  text-base font-normal  rounded-lg  hover:bg-gray-100 `}>
             <IoIosAddCircle className="flex-shrink-0 w-6 h-6  transition duration-75   "/>
                <span className="flex-1 ml-3 whitespace-nowrap">Add Teachers</span>
             </a>
          </li>
-         </Link>
+         </Link>}
          <Link href="/dashboard/viewallstudents">
          <li  onClick={toggleSidebar} >
          <a  className={`cursor-pointer flex items-center p-2 ${currentPath=="/dashboard/viewallstudents" ? "text-violet-600" : 'text-gray-500' }  text-base font-normal  rounded-lg  hover:bg-gray-100 `}>
              
                <BsFillEyeFill className="flex-shrink-0 w-6 h-6  transition duration-75   "/>
                <span className="flex-1 ml-3 whitespace-nowrap">View all students</span>
+            </a>
+         </li>
+         </Link>
+         <Link href="/dashboard/viewallteachers">
+         <li  onClick={toggleSidebar} >
+         <a  className={`cursor-pointer flex items-center p-2 ${currentPath=="/dashboard/viewallteachers" ? "text-violet-600" : 'text-gray-500' }  text-base font-normal  rounded-lg  hover:bg-gray-100 `}>
+             
+               <BsFillEyeFill className="flex-shrink-0 w-6 h-6  transition duration-75   "/>
+               <span className="flex-1 ml-3 whitespace-nowrap">View all teachers</span>
             </a>
          </li>
          </Link>
@@ -108,12 +129,10 @@ export default function DashboardSidebar() {
          </li>
          </Link>
          <li onClick={() => {
-                    const con=confirm("do you really want to logout?")
+                    const con=confirm("Do you really want to logout?")
                     if(con){
                       removeToken();
-                      clearCart();
-                      localStorage.removeItem("user");
-                      localStorage.removeItem("role");
+                  
                     }
                    
                   }} >

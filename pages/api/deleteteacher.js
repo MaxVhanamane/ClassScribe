@@ -1,11 +1,11 @@
 import connectDb from "../../middleware/mongoose";
-import Student from "../../models/students";
+import User from "../../models/users";
 
 export default async function handler(req,res){
     connectDb()
     if(req.method==="POST"){
-        let deleteStudent = await Student.findOneAndDelete(req.body)
-        if(deleteStudent){
+        let deleteTeacher = await User.findByIdAndDelete(req.body._id)
+        if(deleteTeacher){
 
             res.status(200).json({ success: true })
         }
