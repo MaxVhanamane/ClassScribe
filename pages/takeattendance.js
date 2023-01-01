@@ -86,7 +86,7 @@ const [data,setData]=useState(allStudents)
         </thead>
         <tbody>
             { data.sort((d,e)=>{return d.rollNumber-e.rollNumber }).map((item,index)=>{
-                return <tr key={index} className="bg-white border-border-collapse   dark:bg-gray-800 dark:border-gray-700">
+                return <tr key={index} className="bg-white border-border-collapse   dark:bg-gray-800 dark:border-gray-700 ">
            
                  <td className="py-4 px-2">
                  {item.rollNumber}

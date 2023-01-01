@@ -1,14 +1,16 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect,useContext } from 'react'
 import Link from "next/link"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
 import Head from "next/head";
+import { AuthContext } from '../context/AuthState';
 
 
 export default function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const{setToken,setRole}=useContext(AuthContext)
   const router=useRouter()
   useEffect(()=>{
  const token=localStorage.getItem("token")
@@ -41,9 +43,12 @@ export default function Login() {
       })
       const response = await res.json()
       if(response.success){
-     localStorage.setItem("token",response.jwtToken)
-    //  localStorage.setItem("user",response.email)
-     localStorage.setItem("role",response.role)
+   localStorage.setItem("token",response.jwtToken)
+   let token= localStorage.getItem("token")
+    localStorage.setItem("role",response.role)
+    let role=localStorage.getItem("role")
+   setToken(token)
+   setRole(role)
       toast.success('Logged in successfully!', {
         autoClose: 2000,
         hideProgressBar: false,
@@ -74,10 +79,10 @@ else{
   return (
     <>
     <Head>
-    <title>Attendance - Login</title>
+    <title>AttendanceNotifier - Login</title>
     <meta name="description" content="Login page" />
    </Head>
-    <section className="h-screen gradient-form bg-gray-200 ">
+    <section className="h-screen gradient-form  ">
     <div className=" py-12 px-6 h-full">
    
       <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">

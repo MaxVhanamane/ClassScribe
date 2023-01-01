@@ -10,14 +10,13 @@ export default function Layout({children}) {
   useEffect(()=>{
     let token = localStorage.getItem("token");
     let role = localStorage.getItem("role");
-    if(!token && !role && router.pathname!="/login"){
+    if(!token && !role && router.pathname!="/login" && router.pathname!="/forgotpassword" ){
       router.push("/login")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[router.query])
   useEffect(()=>{
     let token = localStorage.getItem("token");
-    const data = {token};
 
     async function verify(){
 
@@ -25,8 +24,8 @@ export default function Layout({children}) {
       method: 'POST', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+        'Authorization': `Bearer ${token}`,
+      }
     })
 
     const response = await res.json()

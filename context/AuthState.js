@@ -21,8 +21,9 @@ useEffect(()=>{
     setToken(tokenValue)
     setRole(role)
   }
- 
 },[])
+
+
 
   
   const removeToken=()=>{
@@ -44,7 +45,7 @@ useEffect(()=>{
  
   return (
     <AuthContext.Provider
-      value={{ token,role,removeToken}}
+      value={{ token,role,removeToken,setRole,setToken}}
     >
       {/* Provider will give access to all the above states and functions to the components which are in props.children */}
       {props.children}

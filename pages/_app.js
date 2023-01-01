@@ -6,6 +6,7 @@ import AuthState from "./../context/AuthState";
 import Layout from "./../components/Layout";
 
 function MyApp({ Component, pageProps }) {
+
   return<>
        <ToastContainer
     position="top-left"

@@ -1,7 +1,6 @@
 import connectDb from '../../middleware/mongoose';
 import Student from '../../models/students';
 export default async function handler(req, res) {
-    console.log(req.body)
     connectDb()
     if (req.method === "POST") {
         
