@@ -230,7 +230,7 @@ export default function Forgotpassword() {
                         <button
                           onClick={handleResetPassword}
 
-                          className="  inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md   active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-violet-800 hover:bg-violet-900"
+                          className="  inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight  rounded shadow-md   active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-violet-800 hover:bg-violet-900"
 
                           data-mdb-ripple="true"
                           data-mdb-ripple-color="light"
@@ -262,7 +262,7 @@ export default function Forgotpassword() {
                       <div className="text-center pt-1 mb-12 pb-1">
                         <button
                           onClick={handleSendMail}
-                          className="  inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md   active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-violet-800 hover:bg-violet-900"
+                          className="  inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight  rounded shadow-md   active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-violet-800 hover:bg-violet-900"
 
                           data-mdb-ripple="true"
                           data-mdb-ripple-color="light"

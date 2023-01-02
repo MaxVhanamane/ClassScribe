@@ -119,7 +119,7 @@ else{
                     </div>
                     <div className="text-center pt-1 mb-12 pb-1">
                       <button
-                        className=" bg-violet-900 inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md   active:shadow-lg transition duration-150 ease-in-out w-full mb-3 pink_btn "
+                        className=" bg-violet-900 inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight  rounded shadow-md   active:shadow-lg transition duration-150 ease-in-out w-full mb-3 pink_btn "
       
                         data-mdb-ripple="true"
                         data-mdb-ripple-color="light"
@@ -130,17 +130,7 @@ else{
                       </button>
                      <Link href="/forgotpassword" className="text-gray-500">Forgot password?</Link>
                     </div>
-                    {/* <div className="flex items-center justify-between pb-6">
-                      <p className="mb-0 mr-2">Don&apos;t have an account?</p>
-                      <Link href="/signup"><button
-                        type="button"
-                        className="inline-block px-6 py-2 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
-                        data-mdb-ripple="true"
-                        data-mdb-ripple-color="light"
-                      >
-                        Sign Up
-                      </button></Link>
-                    </div> */}
+                  
                   </form>
                 </div>
               </div>

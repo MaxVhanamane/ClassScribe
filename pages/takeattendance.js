@@ -63,8 +63,8 @@ const [data,setData]=useState(allStudents)
 
 
         {data.length>0?<div className="overflow-x-auto relative lg:w-3/4 w-full p-1">
-    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 mt-6">
-        <thead className="text-xs text-gray-700 uppercase border-b border-r-0 border-collapse bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <table className="w-full text-sm text-left text-gray-500  mt-6">
+        <thead className="text-xs text-gray-700 uppercase border-b border-r-0 border-collapse bg-gray-50 ">
             <tr >
                 <th scope="col" className="py-3 px-2 ">
                     Roll NO.
@@ -86,7 +86,7 @@ const [data,setData]=useState(allStudents)
         </thead>
         <tbody>
             { data.sort((d,e)=>{return d.rollNumber-e.rollNumber }).map((item,index)=>{
-                return <tr key={index} className="bg-white border-border-collapse   dark:bg-gray-800 dark:border-gray-700 ">
+                return <tr key={index} className="bg-white">
            
                  <td className="py-4 px-2">
                  {item.rollNumber}

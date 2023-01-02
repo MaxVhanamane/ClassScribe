@@ -70,8 +70,8 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
             <h1 className='text-center font-bold text-gray-800 mt-8 lg:text-3xl text-xl mb-4 pb-4'>{`Attendance of grade ${classNameValue}  students`} </h1>
             {showAttendace ? <div className='flex items-center justify-center'>
                 {data.length > 0 ? <div className="overflow-x-auto relative  w-full p-1 lg:px-12 mb-20" >
-                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 mt-6" id="table_pdf" >
-                        <thead className="text-xs text-gray-700 uppercase border-b border-r-0 border-collapse bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <table className="w-full text-sm text-left text-gray-500  mt-6" id="table_pdf" >
+                        <thead className="text-xs text-gray-700 uppercase border-b border-r-0 border-collapse bg-gray-50 ">
                             <tr >
                                 <th scope="col" className="py-3 px-2 text-center">
                                     Sr.No
@@ -158,7 +158,7 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
 
 
                             {studentDetails.sort((d, e) => { return d.rollNumber - e.rollNumber }).map((item, index) => {
-                                return <tr key={index} className="bg-white border-border-collapse   dark:bg-gray-800 dark:border-gray-700">
+                                return <tr key={index} className="bg-white border-border-collapse   ">
 
                                     <td className="py-4 px-2 text-center">
                                         {index + 1}
