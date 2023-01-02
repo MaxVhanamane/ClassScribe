@@ -16,10 +16,7 @@ export default function Select({allStudents}) {
 
   return (
     <div className='flex flex-col items-center justify-center'>
-     
-
-
-
+  
   <div  className='mt-6'> 
 <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900  text-center">Select the Class</label>
 <div className='mt-2'>
