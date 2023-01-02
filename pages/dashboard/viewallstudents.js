@@ -48,7 +48,7 @@ const [studentDetails,setStudentDetails]=useState({
 
 
     let data = { className: selectClass, division: selectDivisionName }
-    let response = await fetch('http://localhost:3000/api/getstudents', {
+    let response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getstudents`, {
       method: 'POST', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ const [studentDetails,setStudentDetails]=useState({
   const handleViewAll = async () => {
 
 
-    let response = await fetch('http://localhost:3000/api/getstudents', {
+    let response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getstudents`, {
       method: 'GET', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ const [studentDetails,setStudentDetails]=useState({
 const handleDeleteStudent=async(item)=>{
 
 let data =item
-    let response = await fetch('http://localhost:3000/api/deletestudent', {
+    let response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/deletestudent`, {
       method: 'POST', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',

@@ -11,7 +11,7 @@ const [data,setData]=useState(allStudents)
 
   const handleClick=async(attendance,studentInfo)=>{
     let data={name:studentInfo.name,email:studentInfo.email,attendance:attendance}
-    let res=await fetch('http://localhost:3000/api/sendmail', { 
+    let res=await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/sendmail`, { 
       method: 'POST', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',

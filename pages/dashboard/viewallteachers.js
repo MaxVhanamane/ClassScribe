@@ -32,7 +32,7 @@ export default function ViewAllTeachers({ allTeachers }) {
 
 
     let data = { role:roleName}
-    let response = await fetch('http://localhost:3000/api/getteachers', {
+    let response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getteachers`, {
       method: 'POST', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export default function ViewAllTeachers({ allTeachers }) {
   const handleViewAll = async () => {
 
 
-    let response = await fetch('http://localhost:3000/api/getteachers', {
+    let response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getteachers`, {
       method: 'GET', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ export default function ViewAllTeachers({ allTeachers }) {
 const handleDeleteTeacher=async(item)=>{
 
 let data ={_id:item._id}
-    let response = await fetch('http://localhost:3000/api/deleteteacher', {
+    let response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/deleteteacher`, {
       method: 'POST', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
