@@ -1,8 +1,8 @@
 import { useEffect,useState } from 'react';
 import Head from "next/head"
 import connectDb from './../middleware/mongoose';
-import Select from '../components/Select'
 import Student from '../models/students';
+import Select from './../components/Select';
 
 export default function Home({allStudents}) {
 
