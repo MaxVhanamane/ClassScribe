@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     {attendanceValue="absent"}
 
     let message = {
-        from: "oreo.max.1998@gmail.com",
+        from: process.env.EMAIL_ADDRESS,
         to: email,
         subject: "Attendance",
         text: `Your son/daughter ${name} is ${attendanceValue}`,
@@ -24,8 +24,8 @@ export default async function handler(req, res) {
         port: 587,
         secure: false, // upgrade later with STARTTLS
         auth: {
-          user: "oreo.max.1998@gmail.com",
-          pass: "oqrktjkjqfrhmhme",
+          user: process.env.EMAIL_ADDRESS,
+          pass: process.env.EMAIL_PASSWORD,
         },
       })
   

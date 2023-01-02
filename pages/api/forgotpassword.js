@@ -63,7 +63,7 @@ export default async function handler(req, res) {
 
             // send mail with defined transport object
             let info = await transporter.sendMail({
-                from: "oreo.max.1998@gmail.com", // sender address
+                from: process.env.EMAIL_ADDRESS, // sender address
                 to: req.body.email, // list of receivers
                 subject: "Password reset link for your account on Attendance Master", // Subject line
                 html: email, // html body
