@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import connectDb from './../middleware/mongoose';
 import Student from '../models/students';
 import { jsPDF } from "jspdf";
@@ -11,7 +11,6 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
     const [studentDetails, setStudentDetails] = useState(allStudents)
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
-
     const [showAttendace, setShowAttendance] = useState(false)
 
     let dates = data.map((item) => {
@@ -21,8 +20,8 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
     let uniqueDates = [...new Set(dates.sort())];
 
 
-
     const getData = async () => {
+      
         let sDate = new Date(startDate).toISOString().substring(0, 10) + "T00:00:00Z"
         let eDate = new Date(endDate).toISOString().substring(0, 10) + "T23:59:59Z"
         let data = { sDate, eDate }
@@ -191,15 +190,26 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
                                     {/* {console.log(data.filter(x => { return x.name === item.name }))} */}
 
                                     {data.filter(x => { return x.name === item.name }).sort(function (a, b) {
-
+     
                                         return new Date(a.date) - new Date(b.date);
                                     }).map((i, index) => {
-                                        return <td key={index} className="py-4 px-2 text-center">
+                                        return<Fragment key={index}> <td  className="py-4 px-2 text-center">
                                             {i.attendance}
                                         </td>
+                                        <td className="py-4 px-2 text-center">
+                                        {
+                                            data.filter(x => { return x.name === item.name }).filter(item => item.attendance === 'P').length
+                                        }
+                                    </td>
+                                    <td className="py-4 px-2 text-center">
+                                        {
+                                            data.filter(x => { return x.name === item.name }).filter(item => item.attendance === 'A').length
+                                        }
+                                    </td>
+                                        </Fragment>
                                     })}
 
-                                    <td className="py-4 px-2 text-center">
+                                    {/* <td className="py-4 px-2 text-center">
                                         {
                                             data.filter(x => { return x.name === item.name }).filter(item => item.attendance === 'P').length
                                         }
@@ -209,7 +219,7 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
                                         {
                                             data.filter(x => { return x.name === item.name }).filter(item => item.attendance === 'A').length
                                         }
-                                    </td>
+                                    </td> */}
 
 
                                 </tr>

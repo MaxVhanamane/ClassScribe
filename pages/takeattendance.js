@@ -31,7 +31,7 @@ const [data,setData]=useState(allStudents)
           progress: undefined,
         });
   }
-
+// as we are living in india so while adding the date we will add it in ISO format date:new Date().toISOString() 
    const studentInformation = {name:studentInfo.name,email:studentInfo.email,className:studentInfo.className,division:studentInfo.division,rollNumber:studentInfo.rollNumber,attendance:attendance,date:new Date().toISOString(),time:new Date().toLocaleTimeString(),
   genRegNumber:studentInfo.genRegNumber,caste:studentInfo.caste,subCaste:studentInfo.subCaste,DOB:studentInfo.DOB,phone:studentInfo.phone
   
