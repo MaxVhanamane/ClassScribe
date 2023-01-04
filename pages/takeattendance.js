@@ -5,9 +5,12 @@ import connectDb from './../middleware/mongoose';
 import { toast } from 'react-toastify';
 
 export default function TakeAttendance({allStudents,className}) {
-
-const [data,setData]=useState(allStudents)
-
+const [incomingData,setIncomingData]=useState(allStudents)
+const newD=incomingData.map((d)=>{
+  d.status="pending"
+  return d
+})
+const [data,setData]=useState(newD)
 
   const handleClick=async(attendance,studentInfo)=>{
     let data={name:studentInfo.name,email:studentInfo.email,attendance:attendance}
@@ -91,6 +94,9 @@ const [data,setData]=useState(allStudents)
                 <th scope="col" className="py-3 px-2">
                     Absent
                 </th>
+                {/* <th scope="col" className="py-3 px-2">
+                    Status
+                </th> */}
              
             </tr>
         </thead>
@@ -113,6 +119,9 @@ const [data,setData]=useState(allStudents)
                 <td className="py-4 px-2">
                 <button onClick={(e)=>{handleClick(e.target.value,item)} } className="bg-red-500 hover:bg-red-600 hover:shadow text-white rounded p-1 px-2" value="A">Absent</button>
                 </td>
+                {/* <td className="py-4 px-2 hidden sm:block">
+                    <div className={`w-2 h-2 ${item.status==="done"? "bg-green-500":"bg-red-500"} rounded-full`} ></div>
+                </td> */}
             </tr>
             })}
            
