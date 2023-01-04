@@ -8,8 +8,8 @@ export default function ViewAllTeachers({ allTeachers }) {
 
   const [data, setData] = useState(allTeachers)
   const [showModal, setShowModal] = useState(false);
-
-  let roles = data.map((role) => { return role.role })
+  const [teachersData]=useState(allTeachers)
+  let roles = teachersData.map((role) => { return role.role })
   let uniqueroleNames = [...new Set(roles)]
 
 
@@ -216,17 +216,18 @@ const handleEdit=async()=>{
         <link rel="icon" href="/favicon.ico" />
       </Head>
   <DashboardSidebar/>
+  <div className="lg:ml-60 sticky top-0 bg-violet-900 z-10">
+    <div className="  p-3 font-bold md:text-3xl text-2xl  mx-auto text-center shadow  text-gray-50 bg-violet-900 drop-shadow mb-8 "><h1 className="text-center mx-auto">Teacher list </h1></div></div>
       <main className=' flex items-center justify-center flex-col lg:ml-60 sticky top-0 bg-[#f9fafb] z-10'>
-        <h1 className="w-full  text-center p-3 text-white font-bold text-lg bg-violet-900">Teacher&apos;s list </h1>
 
 
 
         <div className='flex flex-row gap-2 items-center justify-center px-1'>
 
           <div className='mt-6'>
-            {/* <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 text-center">Select the Class</label> */}
+        
             <div className='mt-2'>
-              <select className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              <select className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 "
                 value={roleName}
                 defaultValue={"default"}
                 onChange={(e) => setRoleName(e.target.value)}
@@ -271,8 +272,8 @@ const handleEdit=async()=>{
         <p onClick={handleViewAll} className="md:hidden text-right pr-2 text-blue-700 mt-2 hover:text-blue-600"  >
               View All teachers
             </p>
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 mt-4">
-            <thead className="text-xs text-gray-700 uppercase border-b border-r-0 border-collapse bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <table className="w-full text-sm text-left text-gray-500  mt-4">
+            <thead className="text-xs text-gray-700 uppercase border-b border-r-0 border-collapse bg-gray-50 ">
               <tr >
                 <th scope="col" className="py-3 px-2 md:px-2  text-center ">
                   Name
@@ -300,7 +301,7 @@ const handleEdit=async()=>{
             </thead>
             <tbody>
               {data.map((item, index) => {
-                return <tr key={item.email} className="bg-white border-border-collapse   dark:bg-gray-800 dark:border-gray-700">
+                return <tr key={item.email} className="bg-white border-border-collapse">
 
                   <td className="py-4 px-2 md:px-2 text-center">
                     {item.name}
@@ -355,20 +356,10 @@ const handleEdit=async()=>{
         </div> : <div className="flex justify-center items-center shadow-sm my-20 p-10 text-red-500">No Teacher records found! Please add Teachers. </div>}
 
 
-    
+        {showModal && (
 
 
-
-      </main>
-
-
-
-    </div>
-    
-    {showModal && (
-
-
-<div className="lg:ml-60 bg-gray-100 h-fit absolute inset-0 flex items-center justify-center z-[120] ">
+<div className=" bg-gray-100 h-fit absolute inset-0 flex items-center justify-center z-[120] ">
 
   <div className="bg-violet-900 mt-12  rounded-lg mb-10">
     {/* heading */}
@@ -533,6 +524,16 @@ const handleEdit=async()=>{
 
 
    )}
+
+
+
+      </main>
+
+
+
+    </div>
+    
+   
     </>
 
 

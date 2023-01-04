@@ -1,12 +1,14 @@
-import React, { Fragment, useState } from 'react'
+import React, { useState } from 'react'
 import connectDb from './../middleware/mongoose';
 import Student from '../models/students';
 import { jsPDF } from "jspdf";
 import DatePicker from "react-datepicker";
 import autoTable from 'jspdf-autotable';
 import "react-datepicker/dist/react-datepicker.css";
-import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 export default function Attendancerecord({ allStudents, classNameValue }) {
+    const router = useRouter();
+    const { className, division } = router.query;
     const [data, setData] = useState([])
     const [studentDetails, setStudentDetails] = useState(allStudents)
     const [startDate, setStartDate] = useState(new Date());
@@ -24,7 +26,7 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
       
         let sDate = new Date(startDate).toISOString().substring(0, 10) + "T00:00:00Z"
         let eDate = new Date(endDate).toISOString().substring(0, 10) + "T23:59:59Z"
-        let data = { sDate, eDate }
+        let data = { sDate, eDate,className,division }
         const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getdatewisedata`, {
             method: 'POST', // or 'PUT'
             headers: {
@@ -69,7 +71,7 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
             <h1 className='text-center font-bold text-gray-800 mt-8 lg:text-3xl text-xl mb-4 pb-4'>{`Attendance of grade ${classNameValue}  students`} </h1>
             {showAttendace ? <div className='flex items-center justify-center'>
                 {data.length > 0 ? <div className="overflow-x-auto relative  w-full p-1 lg:px-12 mb-20" >
-                    <table className="w-full text-sm text-left text-gray-500  mt-6" id="table_pdf" >
+                    <table className="w-full text-sm text-left text-gray-500  mt-6 " id="table_pdf" >
                         <thead className="text-xs text-gray-700 uppercase border-b border-r-0 border-collapse bg-gray-50 ">
                             <tr >
                                 <th scope="col" className="py-3 px-2 text-center">
@@ -82,10 +84,10 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
                                     DOB
                                 </th>
                                 <th scope="col" className="py-3 px-2 text-center">
-                                    caste
+                                    Caste
                                 </th>
                                 <th scope="col" className="py-3 px-2 text-center">
-                                    subcaste
+                                    Subcaste
                                 </th>
                                 <th scope="col" className="py-3 px-2 text-center">
                                     R.No
@@ -106,7 +108,7 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
                                 })}
 
                                 <th scope="col" className="py-3 px-2 text-center">
-                                    Present days
+                                   Present days
                                 </th>
                                 <th scope="col" className="py-3 px-2 text-center">
                                     Absent days
@@ -114,7 +116,7 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
 
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="font-semibold">
                             {/* data.sort((a,b)=>{return new Date(a.date) - new Date(b.date) }) */}
                             {/* { data.sort((d,e)=>{return d.rollNumber-e.rollNumber }).map((item,index)=>{
                 return <tr key={index} className="bg-white border-border-collapse   dark:bg-gray-800 dark:border-gray-700">
@@ -190,26 +192,14 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
                                     {/* {console.log(data.filter(x => { return x.name === item.name }))} */}
 
                                     {data.filter(x => { return x.name === item.name }).sort(function (a, b) {
-     
                                         return new Date(a.date) - new Date(b.date);
                                     }).map((i, index) => {
-                                        return<Fragment key={index}> <td  className="py-4 px-2 text-center">
+                                        return <td key={index} className={`py-4 ${i.attendance==="NT"?"text-red-600":null} font-semibold px-2 text-center`}>
                                             {i.attendance}
                                         </td>
-                                        <td className="py-4 px-2 text-center">
-                                        {
-                                            data.filter(x => { return x.name === item.name }).filter(item => item.attendance === 'P').length
-                                        }
-                                    </td>
-                                    <td className="py-4 px-2 text-center">
-                                        {
-                                            data.filter(x => { return x.name === item.name }).filter(item => item.attendance === 'A').length
-                                        }
-                                    </td>
-                                        </Fragment>
                                     })}
 
-                                    {/* <td className="py-4 px-2 text-center">
+                                    <td className="py-4 px-2 text-center">
                                         {
                                             data.filter(x => { return x.name === item.name }).filter(item => item.attendance === 'P').length
                                         }
@@ -219,7 +209,7 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
                                         {
                                             data.filter(x => { return x.name === item.name }).filter(item => item.attendance === 'A').length
                                         }
-                                    </td> */}
+                                    </td>
 
 
                                 </tr>

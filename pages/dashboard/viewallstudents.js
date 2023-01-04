@@ -248,7 +248,6 @@ const handleEdit=async()=>{
 
   return (
     <>
-    <div >
           <style jsx global>{`
        footer{
         display:none;
@@ -263,17 +262,18 @@ const handleEdit=async()=>{
         <link rel="icon" href="/favicon.ico" />
       </Head>
   <DashboardSidebar/>
-      <main className=' flex items-center justify-center flex-col lg:ml-60 sticky top-0 bg-[#f9fafb] z-10'>
-        <h1 className="w-full  text-center p-3 text-white font-bold text-lg bg-violet-900">Student list </h1>
+  <div className="lg:ml-60 sticky top-0 bg-violet-900 z-10">
+    <div className="  p-3 font-bold md:text-3xl text-2xl  mx-auto text-center shadow  text-gray-50 bg-violet-900 drop-shadow mb-8 "><h1 className="text-center mx-auto">Student list</h1></div></div>
+      <main className=' flex items-center justify-center flex-col lg:ml-60 sticky top-0 bg-[#f9fafb] '>
 
 
 
         <div className='flex flex-row gap-2 items-center justify-center px-1'>
 
           <div className='mt-6'>
-            {/* <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 text-center">Select the Class</label> */}
+            
             <div className='mt-2'>
-              <select className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              <select className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 "
                 value={selectClass}
                 defaultValue={"default"}
                 onChange={(e) => setSelectClass(e.target.value)}
@@ -290,9 +290,9 @@ const handleEdit=async()=>{
           </div>
 
           <div className='mt-6'>
-            {/* <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 text-center">Select the Class</label> */}
+          
             <div className='mt-2'>
-              <select className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              <select className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 "
                 value={selectDivisionName}
                 defaultValue={"default"}
                 onChange={(e) => setselectDivisionName(e.target.value)}
@@ -335,8 +335,8 @@ const handleEdit=async()=>{
         <p onClick={handleViewAll} className="md:hidden text-right pr-2 text-blue-700 mt-2 hover:text-blue-600"  >
               View All students
             </p>
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 mt-4">
-            <thead className="text-xs text-gray-700 uppercase border-b border-r-0 border-collapse bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <table className="w-full text-sm text-left text-gray-500  mt-4">
+            <thead className="text-xs text-gray-700 uppercase border-b border-r-0 border-collapse bg-gray-50 ">
               <tr >
                 <th scope="col" className="py-3 px-2 md:px-2  text-center ">
                   GR No.
@@ -379,7 +379,7 @@ const handleEdit=async()=>{
             </thead>
             <tbody>
               {data.sort((d, e) => { return d.rollNumber - e.rollNumber }).map((item, index) => {
-                return <tr key={index} className="bg-white border-border-collapse   dark:bg-gray-800 dark:border-gray-700">
+                return <tr key={index} className="bg-white border-border-collapse">
 
                   <td className="py-4 px-2 md:px-2 text-center">
                     {item.genRegNumber}
@@ -464,7 +464,276 @@ const handleEdit=async()=>{
 
 
 
+        {showModal && (
 
+      
+<div className=" bg-gray-100 h-full w-full absolute inset-0 flex items-center justify-center z-[120] ">
+
+<div className="bg-violet-900 mt-12  rounded-lg mb-10">
+  {/* heading */}
+<div className="text-center font-bold text-xl mt-4 border-b border-solid border-slate-200">
+  <h2 className="mb-2 text-gray-100">Edit the student details</h2>
+  </div>
+    {/* body */}
+    <div>
+    <div className='p-6  pt-6 flex justify-center w-full'>
+
+<div className="block p-6 rounded-lg shadow-lg bg-white lg:w-[50rem] w-80 md:w-[40rem]  mb-12">
+<div className="form-group mb-6">
+  <label htmlFor="name"  className="formLabel inline-block mb-2 text-gray-700">Name</label>
+  <input onChange={handleChange} value={studentDetails.name} name="name" type="text" className="form-control
+    block
+    w-full
+    px-3
+    py-1.5
+    text-base
+    font-normal
+    text-gray-700
+    bg-white bg-clip-padding
+    border border-solid border-gray-300
+    rounded
+    transition
+    ease-in-out
+    m-0
+    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="name"
+    placeholder="Enter a name"/>
+</div>
+
+
+<div className="form-group mb-6">
+  <label htmlFor="email"  className="formLabel inline-block mb-2 text-gray-700">Email</label>
+  <input onChange={handleChange} value={studentDetails.email} name="email" type="email" className="form-control
+    block
+    w-full
+    px-3
+    py-1.5
+    text-base
+    font-normal
+    text-gray-700
+    bg-white bg-clip-padding
+    border border-solid border-gray-300
+    rounded
+    transition
+    ease-in-out
+    m-0
+    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="email"
+    placeholder="Enter a parent's mail id"/>
+</div>
+
+<div className="form-group mb-6">
+  <label htmlFor="phone"  className="formLabel inline-block mb-2 text-gray-700">Phone</label>
+  <input onChange={handleChange} value={studentDetails.phone} name="phone" type="number" className="form-control
+    block
+    w-full
+    px-3
+    py-1.5
+    text-base
+    font-normal
+    text-gray-700
+    bg-white bg-clip-padding
+    border border-solid border-gray-300
+    rounded
+    transition
+    ease-in-out
+    m-0
+    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="phone"
+    placeholder="Enter the phone number"/>
+</div>
+
+
+<div className="form-group mb-6">
+  <label htmlFor="classname"  className="formLabel inline-block mb-2 text-gray-700">Class Name</label>
+  <input onChange={handleChange} value={studentDetails.className} name="className" type="number" className="form-control
+    block
+    w-full
+    px-3
+    py-1.5
+    text-base
+    font-normal
+    text-gray-700
+    bg-white bg-clip-padding
+    border border-solid border-gray-300
+    rounded
+    transition
+    ease-in-out
+    m-0
+    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="classname"
+    placeholder="Enter a class name"/>
+</div>
+
+
+<div className="form-group mb-6">
+  <label htmlFor="division"  className="formLabel inline-block mb-2 text-gray-700">Division</label>
+  <input onChange={handleChange} value={studentDetails.division} name="division" type="text" className="form-control
+    block
+    w-full
+    px-3
+    py-1.5
+    text-base
+    font-normal
+    text-gray-700
+    bg-white bg-clip-padding
+    border border-solid border-gray-300
+    rounded
+    transition
+    ease-in-out
+    m-0
+    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="division"
+    placeholder="Enter a division name"/>
+</div>
+
+
+<div className="form-group mb-6">
+  <label htmlFor="rollnumber"  className="formLabel inline-block mb-2 text-gray-700">Roll Number</label>
+  <input onChange={handleChange} value={studentDetails.rollNumber} name="rollNumber" type="number" className="form-control
+    block
+    w-full
+    px-3
+    py-1.5
+    text-base
+    font-normal
+    text-gray-700
+    bg-white bg-clip-padding
+    border border-solid border-gray-300
+    rounded
+    transition
+    ease-in-out
+    m-0
+    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="rollnumber"
+    placeholder="Enter a roll number"/>
+</div>
+
+
+
+<div className="form-group mb-6">
+  <label htmlFor="genRegNumber"  className="formLabel inline-block mb-2 text-gray-700">General register number</label>
+  <input onChange={handleChange} value={studentDetails.genRegNumber} name="genRegNumber" type="number" className="form-control
+    block
+    w-full
+    px-3
+    py-1.5
+    text-base
+    font-normal
+    text-gray-700
+    bg-white bg-clip-padding
+    border border-solid border-gray-300
+    rounded
+    transition
+    ease-in-out
+    m-0
+    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="genRegNumber"
+    placeholder="Enter general register number"/>
+</div>
+
+
+<div className="form-group mb-6">
+  <label htmlFor="DOB"  className="formLabel inline-block mb-2 text-gray-700">Date of birth</label>
+  <input onChange={handleChange} value={studentDetails.DOB} name="DOB" type="date" className="form-control
+    block
+    w-full
+    px-3
+    py-1.5
+    text-base
+    font-normal
+    text-gray-700
+    bg-white bg-clip-padding
+    border border-solid border-gray-300
+    rounded
+    transition
+    ease-in-out
+    m-0
+    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="DOB"
+    placeholder="Enter date of birth"/>
+</div>
+
+
+<div className="form-group mb-6">
+  <label htmlFor="caste"  className="formLabel inline-block mb-2 text-gray-700">Caste</label>
+  <input onChange={handleChange} value={studentDetails.caste} name="caste" type="text" className="form-control
+    block
+    w-full
+    px-3
+    py-1.5
+    text-base
+    font-normal
+    text-gray-700
+    bg-white bg-clip-padding
+    border border-solid border-gray-300
+    rounded
+    transition
+    ease-in-out
+    m-0
+    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="caste"
+    placeholder="Enter caste"/>
+</div>
+
+
+<div className="form-group mb-6">
+  <label htmlFor="subCaste"  className="formLabel inline-block mb-2 text-gray-700">Subcast</label>
+  <input onChange={handleChange} value={studentDetails.subCaste} name="subCaste" type="text" className="form-control
+    block
+    w-full
+    px-3
+    py-1.5
+    text-base
+    font-normal
+    text-gray-700
+    bg-white bg-clip-padding
+    border border-solid border-gray-300
+    rounded
+    transition
+    ease-in-out
+    m-0
+    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="subCaste"
+    placeholder="Enter subcaste"/>
+</div>
+      
+     
+      
+      
+    
+  
+
+
+
+ </div>
+                </div>
+
+
+    </div>
+    {/* footer */}
+   
+
+    <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                  <button
+                    className="bg-red-500 text-white hover:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={() => setShowModal(false)}
+                  >
+                    Close
+                  </button>
+                  <button
+                  
+                    className="bg-emerald-500 text-white hover:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={() => {handleEdit()
+                    
+                    
+                    
+                    }}
+                  >
+                    Save Changes
+                  </button>
+                </div>
+
+ 
+
+  </div>
+
+</div>
+
+
+   )}
         
 
 
@@ -472,277 +741,7 @@ const handleEdit=async()=>{
       </main>
 
 
-    </div>
-    {showModal && (
-
-
-      <div className="lg:ml-60 bg-gray-100 h-fit absolute inset-0 flex items-center justify-center z-[120] ">
-      
-      <div className="bg-violet-900 mt-12  rounded-lg mb-10">
-        {/* heading */}
-      <div className="text-center font-bold text-xl mt-4 border-b border-solid border-slate-200">
-        <h2 className="mb-2 text-gray-100">Edit the student details</h2>
-        </div>
-          {/* body */}
-          <div>
-          <div className='p-6  pt-6 flex justify-center w-full'>
     
-    <div className="block p-6 rounded-lg shadow-lg bg-white lg:w-[50rem] w-80 md:w-[40rem]  mb-12">
-    <div className="form-group mb-6">
-        <label htmlFor="name"  className="formLabel inline-block mb-2 text-gray-700">Name</label>
-        <input onChange={handleChange} value={studentDetails.name} name="name" type="text" className="form-control
-          block
-          w-full
-          px-3
-          py-1.5
-          text-base
-          font-normal
-          text-gray-700
-          bg-white bg-clip-padding
-          border border-solid border-gray-300
-          rounded
-          transition
-          ease-in-out
-          m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="name"
-          placeholder="Enter a name"/>
-      </div>
-      
-     
-      <div className="form-group mb-6">
-        <label htmlFor="email"  className="formLabel inline-block mb-2 text-gray-700">Email</label>
-        <input onChange={handleChange} value={studentDetails.email} name="email" type="email" className="form-control
-          block
-          w-full
-          px-3
-          py-1.5
-          text-base
-          font-normal
-          text-gray-700
-          bg-white bg-clip-padding
-          border border-solid border-gray-300
-          rounded
-          transition
-          ease-in-out
-          m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="email"
-          placeholder="Enter a parent's mail id"/>
-      </div>
-
-      <div className="form-group mb-6">
-        <label htmlFor="phone"  className="formLabel inline-block mb-2 text-gray-700">Phone</label>
-        <input onChange={handleChange} value={studentDetails.phone} name="phone" type="number" className="form-control
-          block
-          w-full
-          px-3
-          py-1.5
-          text-base
-          font-normal
-          text-gray-700
-          bg-white bg-clip-padding
-          border border-solid border-gray-300
-          rounded
-          transition
-          ease-in-out
-          m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="phone"
-          placeholder="Enter the phone number"/>
-      </div>
-      
-     
-      <div className="form-group mb-6">
-        <label htmlFor="classname"  className="formLabel inline-block mb-2 text-gray-700">Class Name</label>
-        <input onChange={handleChange} value={studentDetails.className} name="className" type="number" className="form-control
-          block
-          w-full
-          px-3
-          py-1.5
-          text-base
-          font-normal
-          text-gray-700
-          bg-white bg-clip-padding
-          border border-solid border-gray-300
-          rounded
-          transition
-          ease-in-out
-          m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="classname"
-          placeholder="Enter a class name"/>
-      </div>
-      
-     
-      <div className="form-group mb-6">
-        <label htmlFor="division"  className="formLabel inline-block mb-2 text-gray-700">Division</label>
-        <input onChange={handleChange} value={studentDetails.division} name="division" type="text" className="form-control
-          block
-          w-full
-          px-3
-          py-1.5
-          text-base
-          font-normal
-          text-gray-700
-          bg-white bg-clip-padding
-          border border-solid border-gray-300
-          rounded
-          transition
-          ease-in-out
-          m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="division"
-          placeholder="Enter a division name"/>
-      </div>
-      
-     
-      <div className="form-group mb-6">
-        <label htmlFor="rollnumber"  className="formLabel inline-block mb-2 text-gray-700">Roll Number</label>
-        <input onChange={handleChange} value={studentDetails.rollNumber} name="rollNumber" type="number" className="form-control
-          block
-          w-full
-          px-3
-          py-1.5
-          text-base
-          font-normal
-          text-gray-700
-          bg-white bg-clip-padding
-          border border-solid border-gray-300
-          rounded
-          transition
-          ease-in-out
-          m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="rollnumber"
-          placeholder="Enter a roll number"/>
-      </div>
-      
-     
-     
-      <div className="form-group mb-6">
-        <label htmlFor="genRegNumber"  className="formLabel inline-block mb-2 text-gray-700">General register number</label>
-        <input onChange={handleChange} value={studentDetails.genRegNumber} name="genRegNumber" type="number" className="form-control
-          block
-          w-full
-          px-3
-          py-1.5
-          text-base
-          font-normal
-          text-gray-700
-          bg-white bg-clip-padding
-          border border-solid border-gray-300
-          rounded
-          transition
-          ease-in-out
-          m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="genRegNumber"
-          placeholder="Enter general register number"/>
-      </div>
-     
-     
-      <div className="form-group mb-6">
-        <label htmlFor="DOB"  className="formLabel inline-block mb-2 text-gray-700">Date of birth</label>
-        <input onChange={handleChange} value={studentDetails.DOB} name="DOB" type="date" className="form-control
-          block
-          w-full
-          px-3
-          py-1.5
-          text-base
-          font-normal
-          text-gray-700
-          bg-white bg-clip-padding
-          border border-solid border-gray-300
-          rounded
-          transition
-          ease-in-out
-          m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="DOB"
-          placeholder="Enter date of birth"/>
-      </div>
-      
-     
-      <div className="form-group mb-6">
-        <label htmlFor="caste"  className="formLabel inline-block mb-2 text-gray-700">Caste</label>
-        <input onChange={handleChange} value={studentDetails.caste} name="caste" type="text" className="form-control
-          block
-          w-full
-          px-3
-          py-1.5
-          text-base
-          font-normal
-          text-gray-700
-          bg-white bg-clip-padding
-          border border-solid border-gray-300
-          rounded
-          transition
-          ease-in-out
-          m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="caste"
-          placeholder="Enter caste"/>
-      </div>
-      
-     
-      <div className="form-group mb-6">
-        <label htmlFor="subCaste"  className="formLabel inline-block mb-2 text-gray-700">Subcast</label>
-        <input onChange={handleChange} value={studentDetails.subCaste} name="subCaste" type="text" className="form-control
-          block
-          w-full
-          px-3
-          py-1.5
-          text-base
-          font-normal
-          text-gray-700
-          bg-white bg-clip-padding
-          border border-solid border-gray-300
-          rounded
-          transition
-          ease-in-out
-          m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="subCaste"
-          placeholder="Enter subcaste"/>
-      </div>
-            
-           
-            
-            
-          
-        
-      
-      
-      
-       </div>
-                      </div>
-      
-      
-          </div>
-          {/* footer */}
-         
-      
-          <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                        <button
-                          className="bg-red-500 text-white hover:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                          type="button"
-                          onClick={() => setShowModal(false)}
-                        >
-                          Close
-                        </button>
-                        <button
-                        
-                          className="bg-emerald-500 text-white hover:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                          type="button"
-                          onClick={() => {handleEdit()
-                          
-                          
-                          
-                          }}
-                        >
-                          Save Changes
-                        </button>
-                      </div>
-      
-       
-      
-        </div>
-      
-      </div>
-      
-      
-         )}
     </>
   )
 }
