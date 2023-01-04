@@ -3,23 +3,26 @@ import { useState,useEffect} from 'react'
 import Student from './../models/students';
 import connectDb from './../middleware/mongoose';
 import { toast } from 'react-toastify';
-
+import {BiRadioCircleMarked} from "react-icons/bi"
 export default function TakeAttendance({allStudents,className}) {
 const [incomingData,setIncomingData]=useState(allStudents)
 const newD=incomingData.map((d)=>{
   d.status="pending"
   return d
 })
+useEffect(()=>{
+  localStorage.setItem("localData",JSON.stringify(newD))
+},[])
 const [data,setData]=useState(newD)
 
   const handleClick=async(attendance,studentInfo)=>{
-    let data={name:studentInfo.name,email:studentInfo.email,attendance:attendance}
+    let reqData={name:studentInfo.name,email:studentInfo.email,attendance:attendance}
     let res=await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/sendmail`, { 
       method: 'POST', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(reqData),
     })
 
    let rec=await res.json()
@@ -59,6 +62,14 @@ const [data,setData]=useState(newD)
      body: JSON.stringify(studentInformation),
    })
    const fresponse = await response.json()
+let x=JSON.parse(localStorage.getItem("localData"))
+   const index = x.findIndex(item => item.name === studentInfo.name);
+  //  const index = array.findIndex((item) => item.id === action.id);
+   if(index !== -1) {
+    x[index] = { ...x[index], status:"done" };
+    localStorage.setItem("localData",JSON.stringify(x))
+    let d=setData([...JSON.parse(localStorage.getItem("localData"))])
+  }
   }
 
   return (
@@ -79,8 +90,8 @@ const [data,setData]=useState(newD)
     <table className="w-full text-sm text-left text-gray-500  mt-6">
         <thead className="text-xs text-gray-700 uppercase border-b border-r-0 border-collapse bg-gray-50 ">
             <tr >
-                <th scope="col" className="py-3 px-2 ">
-                    Roll NO.
+                <th scope="col" className="py-3 px-2 text-center">
+                    R.No.
                 </th>
                 <th scope="col" className="py-3 px-2">
                     Name
@@ -94,9 +105,9 @@ const [data,setData]=useState(newD)
                 <th scope="col" className="py-3 px-2">
                     Absent
                 </th>
-                {/* <th scope="col" className="py-3 px-2">
+                <th scope="col" className="py-3 px-2 text-center">
                     Status
-                </th> */}
+                </th>
              
             </tr>
         </thead>
@@ -104,8 +115,8 @@ const [data,setData]=useState(newD)
             { data.sort((d,e)=>{return d.rollNumber-e.rollNumber }).map((item,index)=>{
                 return <tr key={index} className="bg-white">
            
-                 <td className="py-4 px-2">
-                 {item.rollNumber}
+                 <td className="py-4 px-2 ">
+                 <div className="flex items-center justify-center ">{item.rollNumber}</div>
                 </td>
                 <td className="py-4 px-2">
                     {item.name}
@@ -119,9 +130,11 @@ const [data,setData]=useState(newD)
                 <td className="py-4 px-2">
                 <button onClick={(e)=>{handleClick(e.target.value,item)} } className="bg-red-500 hover:bg-red-600 hover:shadow text-white rounded p-1 px-2" value="A">Absent</button>
                 </td>
-                {/* <td className="py-4 px-2 hidden sm:block">
-                    <div className={`w-2 h-2 ${item.status==="done"? "bg-green-500":"bg-red-500"} rounded-full`} ></div>
-                </td> */}
+                <td className="py-4 px-2 ">
+                    {/* <div  > */}
+                      <BiRadioCircleMarked className={`w-6 h-6   ${item.status==="done"? "text-green-600":"text-red-600"} rounded-full mx-auto`}/>
+                    {/* </div> */}
+                </td>
             </tr>
             })}
            
