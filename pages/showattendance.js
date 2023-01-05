@@ -16,11 +16,13 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
     const [showAttendace, setShowAttendance] = useState(false)
 
     let dates = data.map((item) => {
-        return parseInt(new Date(item.date).toLocaleDateString("en-GB").split("/")[0])
+        return parseInt(item.date.split("T")[0].split("-")[2])
     })
-
     let uniqueDates = [...new Set(dates.sort())];
 
+
+
+    
 
     const getData = async () => {
       

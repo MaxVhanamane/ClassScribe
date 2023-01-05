@@ -15,6 +15,14 @@ useEffect(()=>{
 },[])
 const [data,setData]=useState(newD)
 
+const getIndianTime=()=>{
+  const currentTime = new Date().getTime();
+const indianTimeZoneOffset = 330 * 60 * 1000; // 330 minutes
+const indianDate = new Date(currentTime + indianTimeZoneOffset);
+const indianDateString = indianDate.toISOString();
+return indianDateString
+}
+
   const handleClick=async(attendance,studentInfo)=>{
     let reqData={name:studentInfo.name,email:studentInfo.email,attendance:attendance}
     let res=await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/sendmail`, { 
@@ -48,7 +56,7 @@ const [data,setData]=useState(newD)
     });
   }
 // as we are living in india so while adding the date we will add it in ISO format date:new Date().toISOString() 
-   const studentInformation = {name:studentInfo.name,email:studentInfo.email,className:studentInfo.className,division:studentInfo.division,rollNumber:studentInfo.rollNumber,attendance:attendance,date:new Date().toISOString(),time:new Date().toLocaleTimeString(),
+   const studentInformation = {name:studentInfo.name,email:studentInfo.email,className:studentInfo.className,division:studentInfo.division,rollNumber:studentInfo.rollNumber,attendance:attendance,date:getIndianTime(),time:new Date().toLocaleTimeString(),
   genRegNumber:studentInfo.genRegNumber,caste:studentInfo.caste,subCaste:studentInfo.subCaste,DOB:studentInfo.DOB,phone:studentInfo.phone
   
   };
@@ -132,7 +140,7 @@ let x=JSON.parse(localStorage.getItem("localData"))
                 </td>
                 <td className="py-4 px-2 ">
                     {/* <div  > */}
-                      <BiRadioCircleMarked className={`w-6 h-6   ${item.status==="done"? "text-green-600":"text-red-600"} rounded-full mx-auto`}/>
+                      <BiRadioCircleMarked className={`w-6 h-6   ${item.status==="done"? "text-emerald-600":"text-red-600"} rounded-full mx-auto`}/>
                     {/* </div> */}
                 </td>
             </tr>

@@ -16,8 +16,8 @@ export default async function handler(req, res) {
         subject: "Attendance",
         // text: `Your son/daughter ${name} is ${attendanceValue}`,
         html:`<p style="font-weight:bold">Dear parent,</p>
-        <p style="font-weight:bold"> Your son/daughter ${name} is <span style="color:${attendanceValue==="present"?"green":"red"}">${attendanceValue}</span> on ${new Date().toLocaleDateString("en-gb")}.</p>
-        <p style="font-weight:bold">आपला पाल्य ${name} आज दिनांक ${new Date().toLocaleDateString("en-gb")} रोजी <span style="color:${attendanceValue==="present"?"green":"red"}">${attendanceValue==="present"?"उपस्थित":"अनुपस्थित"}</span>  आहे.</p>
+        <p style="font-weight:bold"> Your son/daughter ${name} is <span style="color:${attendanceValue==="present"?"green":"red"}">${attendanceValue}</span> in school on ${new Date().toLocaleDateString("en-gb")}.</p>
+        <p style="font-weight:bold">आपला पाल्य ${name} आज दिनांक ${new Date().toLocaleDateString("en-gb")} रोजी शाळेत <span style="color:${attendanceValue==="present"?"green":"red"}">${attendanceValue==="present"?"उपस्थित":"अनुपस्थित"}</span>  आहे.</p>
              <p style="font-weight:bold">Yours faithfully,</p>
              <p style="font-weight:bold">Someshwar Highschool Hattur.</p>`
              
