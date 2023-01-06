@@ -4,6 +4,7 @@ import Student from './../models/students';
 import connectDb from './../middleware/mongoose';
 import { toast } from 'react-toastify';
 import {BiRadioCircleMarked} from "react-icons/bi"
+import {HiCheckCircle} from "react-icons/hi"
 export default function TakeAttendance({allStudents,className}) {
 const [incomingData,setIncomingData]=useState(allStudents)
 const newD=incomingData.map((d)=>{
@@ -97,10 +98,7 @@ let x=JSON.parse(localStorage.getItem("localData"))
 
       <main className=' flex items-center justify-center flex-col'>
         <h1 className= "w-full  text-center p-2 text-white font-bold text-lg bg-violet-900">Student list for class {className}</h1>
-        
- 
-
-
+     
         {data.length>0?<div className="overflow-x-auto relative lg:w-3/4 w-full p-1">
     <table className="w-full text-sm text-left text-gray-500  mt-6">
         <thead className="text-xs text-center md:text-left text-gray-700 uppercase border-b border-r-0 border-collapse bg-gray-50 ">
@@ -147,7 +145,7 @@ let x=JSON.parse(localStorage.getItem("localData"))
                 </td>
                 <td className="py-4 px-2 ">
                     {/* <div  > */}
-                      <BiRadioCircleMarked className={`w-6 h-6   ${item.status==="done"? "text-emerald-600":"text-red-600"} rounded-full mx-auto`}/>
+                      {item.status==="done"?<HiCheckCircle className={`w-4 h-4  text-emerald-600 rounded-full mx-auto`}/>:<BiRadioCircleMarked className={`w-5 h-5 text-red-600 rounded-full mx-auto`}/>}
                     {/* </div> */}
                 </td>
             </tr>

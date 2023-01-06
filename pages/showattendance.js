@@ -50,34 +50,43 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
     }
     return (
         <>
-            <div className='mt-16 flex items-center justify-center flex-col md:flex-row  border-b border-gray-800 pb-6'>
-                <div className='flex flex-col md:flex-row '>
+            <div className='w-full flex items-center justify-center flex-col md:flex-row fixed top-[3.25rem] z-10 bg-gray-50  border-b border-gray-800 pb-6 pt-4'>
+              <div className="flex gap-1">
+                <div className='flex flex-col md:flex-row gap-2 md:mx-2'>
 
                     <p className='my-auto mx-2 md:mx-auto'>Start Date:</p>
                     <div>
-                        <DatePicker dateFormat="dd/MM/yyyy" className='bg-gray-100 text-center m-2 border-2 rounded border-gray-700' selected={startDate} onChange={(date) => setStartDate(date)} />
+                        <DatePicker dateFormat="dd/MM/yyyy" className='bg-gray-100 text-center w-32 md:w-40 border-2 rounded border-gray-700' selected={startDate} onChange={(date) => setStartDate(date)} />
                     </div>
                 </div>
 
-                <div className='flex flex-col md:flex-row '>
+                <div className='flex flex-col md:flex-row gap-2'>
                     <p className='my-auto mx-2 md:mx-auto'>End Date:</p>
                     <div>
-                        <DatePicker dateFormat="dd/MM/yyyy" className='bg-gray-100  text-center m-2 border-2 rounded border-gray-700' selected={endDate} onChange={(date) => setEndDate(date)} />
+                        <DatePicker dateFormat="dd/MM/yyyy" className='bg-gray-100  text-center w-32 md:w-40 border-2 rounded border-gray-700' selected={endDate} onChange={(date) => setEndDate(date)} />
                     </div>
                 </div>
+            </div>
                 <div className='flex mt-2 md:mt-auto'>
                     <button className='m-2  text-center bg-violet-900 text-white rounded p-0.5 px-1' onClick={getData}>Get attendance</button>
                     <button className='m-2  text-center bg-violet-900 text-white rounded p-0.5 px-1' onClick={getPdf}>Download pdf</button>
                 </div>
+              
             </div>
-            <h1 className='text-center font-bold text-gray-800 mt-8 lg:text-3xl text-xl mb-4 pb-4'>{`Attendance of grade ${classNameValue}  students`} </h1>
-            {showAttendace ? <div className='flex items-center justify-center'>
-                {data.length > 0 ? <div className="overflow-x-auto relative  w-full p-1 lg:px-12 mb-20" >
-                    <table className="w-full text-sm text-left text-gray-500  mt-6 " id="table_pdf" >
-                        <thead className="text-xs text-gray-700 uppercase border-b border-r-0 border-collapse bg-gray-50 ">
+           <div>
+
+           <h1 className='fixed top-36 w-full text-center font-bold  text-gray-800 lg:text-3xl text-xl mb-1 pb-4 '>{`Attendance of grade ${classNameValue}  students`} </h1>
+
+           </div>
+            {showAttendace ? <div>
+                {data.length > 0 ? <div className=" fixed top-52 h-[calc(100vh-13rem)]  overflow-auto  w-full  lg:px-12 mb-20" >
+                    <div className="pb-16">
+                    <table className=" w-full overflow-auto text-sm text-left text-gray-500 " id="table_pdf" >
+                        
+                        <thead className="sticky top-0 text-xs  w-screen text-gray-700 uppercase  bg-gray-50  ">
                             <tr >
                                 <th scope="col" className="py-3 px-2 text-center">
-                                    Sr.No
+                                   Sr.No
                                 </th>
                                 <th scope="col" className="py-3 px-2 text-center">
                                     GR.No
@@ -100,7 +109,7 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
 
                                 {/* <th scope="col" className="py-3 px-2 text-center">
                     P/A
-                </th>
+                </th> 
                 <th scope="col" className="py-3 px-2 text-center">
                     Att. Date
                 </th> */}
@@ -118,7 +127,7 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
 
                             </tr>
                         </thead>
-                        <tbody className="font-semibold">
+                        <tbody className="font-semibold ">
                             {/* data.sort((a,b)=>{return new Date(a.date) - new Date(b.date) }) */}
                             {/* { data.sort((d,e)=>{return d.rollNumber-e.rollNumber }).map((item,index)=>{
                 return <tr key={index} className="bg-white border-border-collapse   dark:bg-gray-800 dark:border-gray-700">
@@ -220,10 +229,11 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
 
                         </tbody>
                     </table>
-                </div> : <div className="flex justify-center items-center font-semibold  my-20 py-10 px-4 text-red-500">No attendance records found! </div>}
+                    </div>
+                </div> : <div className="flex justify-center items-center font-semibold fixed w-full my-52 py-10 px-4 text-red-500">No attendance records found! </div>}
 
 
-            </div> : <div className="flex justify-center font-semibold items-center  my-20 py-10 px-4 text-violet-900 animate-pulse">Select the date range to view attendance. </div>}
+            </div> : <div className="flex justify-center font-semibold items-center fixed w-full my-52 py-10 px-4 text-violet-900 animate-pulse">Select the date range to view attendance. </div>}
         </>
     )
 }
