@@ -24,6 +24,20 @@ return indianDateString
 }
 
   const handleClick=async(attendance,studentInfo)=>{
+
+//update status 
+let x=JSON.parse(localStorage.getItem("localData"))
+   const index = x.findIndex(item => item.name === studentInfo.name);
+  //  const index = array.findIndex((item) => item.id === action.id);
+   if(index !== -1) {
+    x[index] = { ...x[index], status:"done" };
+    localStorage.setItem("localData",JSON.stringify(x))
+    let d=setData([...JSON.parse(localStorage.getItem("localData"))])
+  }
+
+
+
+
     let reqData={name:studentInfo.name,email:studentInfo.email,attendance:attendance}
     let res=await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/sendmail`, { 
       method: 'POST', // or 'PUT'
@@ -70,14 +84,7 @@ return indianDateString
      body: JSON.stringify(studentInformation),
    })
    const fresponse = await response.json()
-let x=JSON.parse(localStorage.getItem("localData"))
-   const index = x.findIndex(item => item.name === studentInfo.name);
-  //  const index = array.findIndex((item) => item.id === action.id);
-   if(index !== -1) {
-    x[index] = { ...x[index], status:"done" };
-    localStorage.setItem("localData",JSON.stringify(x))
-    let d=setData([...JSON.parse(localStorage.getItem("localData"))])
-  }
+
   }
 
   return (
@@ -96,7 +103,7 @@ let x=JSON.parse(localStorage.getItem("localData"))
 
         {data.length>0?<div className="overflow-x-auto relative lg:w-3/4 w-full p-1">
     <table className="w-full text-sm text-left text-gray-500  mt-6">
-        <thead className="text-xs text-gray-700 uppercase border-b border-r-0 border-collapse bg-gray-50 ">
+        <thead className="text-xs text-center md:text-left text-gray-700 uppercase border-b border-r-0 border-collapse bg-gray-50 ">
             <tr >
                 <th scope="col" className="py-3 px-2 text-center">
                     R.No.
