@@ -17,7 +17,6 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
     let dates = data.map((item) => {
         return parseInt(item.date.split("T")[0].split("-")[2])
     })
-    console.log(dates)
     let uniqueDates = [...new Set(dates.sort())];
 
     let impData = studentDetails.sort((d, e) => { return d.rollNumber - e.rollNumber }).map((item, index) => {
@@ -41,8 +40,18 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
 
     const getData = async () => {
 
-        let sDate = new Date(startDate).toISOString().substring(0, 10) + "T00:00:00Z"
-        let eDate = new Date(endDate).toISOString().substring(0, 10) + "T23:59:59Z"
+        const getIsoDate=(a)=>{
+            // adding offset so that it can match indian time
+            const dt = new Date(a);
+            dt.setHours(dt.getHours() + 5);
+            dt.setMinutes(dt.getMinutes() + 30);
+            const isoString = dt.toISOString();
+            return isoString
+        }
+    
+        let sDate = getIsoDate(startDate).substring(0, 10) + "T00:00:00Z"
+        let eDate = getIsoDate(endDate).substring(0, 10) + "T23:59:59Z"
+        console.log(sDate,eDate)
         let data = { sDate, eDate, className, division }
         const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getdatewisedata`, {
             method: 'POST', // or 'PUT'
