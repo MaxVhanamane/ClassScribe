@@ -12,8 +12,15 @@ export default async function handler(req, res) {
         let todaysAttendanceStarted = await AttendanceRecord.find({ className: req.body.className, "date": { "$gte": startDate, "$lt": endDate } }) 
 
         let allStudents = await Student.find({ className: req.body.className })
+        // await AttendanceRecord.deleteMany({
+        //     date: {
+        //       $gte: startDate,
+        //       $lt: endDate
+        //     }
+        //   })
+        //   return res.send("hi")
 
-        if(allStudents.length!=todaysAttendanceStarted.length){
+        if(todaysAttendanceStarted.length!=0 && (allStudents.length!=todaysAttendanceStarted.length)){
             // const set2 = new Set(todaysAttendanceStarted.map(obj => obj.name));
 
             // // filter array1 to keep only objects whose name is not in the set

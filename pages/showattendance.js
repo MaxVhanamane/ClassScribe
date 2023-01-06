@@ -17,6 +17,7 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
     let dates = data.map((item) => {
         return parseInt(item.date.split("T")[0].split("-")[2])
     })
+    console.log(dates)
     let uniqueDates = [...new Set(dates.sort())];
 
     let impData = studentDetails.sort((d, e) => { return d.rollNumber - e.rollNumber }).map((item, index) => {
