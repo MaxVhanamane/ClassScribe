@@ -97,11 +97,13 @@ let x=JSON.parse(localStorage.getItem("localData"))
       </Head>
 
       <main className=' flex items-center justify-center flex-col'>
-        <h1 className= "w-full  text-center p-2 text-white font-bold text-lg bg-violet-900">Student list for class {className}</h1>
+        
+        <h1 className= "w-full fixed mt-36 text-center p-2 text-white font-bold text-lg bg-violet-900">Student list for class {className}</h1>
      
-        {data.length>0?<div className="overflow-x-auto relative lg:w-3/4 w-full p-1">
-    <table className="w-full text-sm text-left text-gray-500  mt-6">
-        <thead className="text-xs text-center md:text-left text-gray-700 uppercase border-b border-r-0 border-collapse bg-gray-50 ">
+        {data.length>0?<div className="fixed top-[6.5rem]  h-[calc(100vh-6.5rem)] overflow-auto lg:w-3/4 w-full ">
+          <div className="mb-16">
+    <table className="w-full text-sm text-left text-gray-500   ">
+        <thead className="text-xs sticky top-0 text-center md:text-left text-gray-700 uppercase  border-collapse bg-gray-50 ">
             <tr >
                 <th scope="col" className="py-3 px-2 text-center">
                     R.No.
@@ -153,7 +155,8 @@ let x=JSON.parse(localStorage.getItem("localData"))
            
         </tbody>
     </table>
-</div>:<div className="flex justify-center items-center shadow-sm my-20 p-10 text-red-500">No Student records found! Please add Students. </div>}
+    </div>
+</div>:<div className="fixed top-36 flex justify-center items-center font-semibold my-20 p-10 text-red-500">No Student records found! Please add Students. </div>}
 
 
 
