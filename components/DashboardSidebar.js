@@ -2,7 +2,6 @@ import React ,{useContext,useRef,useEffect,useState} from 'react'
 import Link  from 'next/link';
 import { IoIosAddCircle } from "react-icons/io";
 import { BsFillEyeFill } from "react-icons/bs";
-import { IoListCircleSharp } from "react-icons/io5";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -24,7 +23,7 @@ export default function DashboardSidebar() {
       
    useEffect(()=>{
       let [token,role]=[localStorage.getItem("token"),localStorage.getItem("role")]
-      if(token && role=="admin"){
+      if(token && role=="Admin"){
          setToken(token)
          setRole(role)
       }
@@ -45,20 +44,20 @@ export default function DashboardSidebar() {
   };
   return (
    <>
-   <div onClick={toggleSidebar}  className="lg:hidden fixed top-[0.375rem] left-5 text-4xl text-gray-50 flex items-center justify-center  z-20">
+   <div onClick={toggleSidebar}  className="lg:hidden fixed top-[0.5rem] left-5 text-3xl text-gray-50 flex items-center justify-center  z-20">
       <GiHamburgerMenu/>
       </div>
     <aside  ref={dashBoardToggler}  className="overflow-y-scroll h-full  shadow-md rounded-sm  sidebar w-60 fixed top-0 left-0 bg-gray-100 z-20 transform transition-transform -translate-x-full lg:translate-x-0 duration-300 " aria-label="Sidebar">
       
    <div className="overflow-y-auto py-4 px-3 h-full bg-gray-50  ">
 
-  <div onClick={toggleSidebar} className="fixed right-4 top-4 text-xl text-gray-500 lg:hidden">
+  <div onClick={toggleSidebar} className="fixed right-1 top-1 text-xl text-gray-500 lg:hidden">
 
    <RiCloseCircleFill/>
   </div>
         <div className="flex-shrink-0 flex ">
        
-          <span className="block h-8 w-auto text-white px-2 rounded-xl bg-violet-900 font-bold text-xl">Attendance </span>
+          <span className="block h-8 w-auto text-white px-2 rounded-xl bg-teal-600 font-bold text-xl">Attendance Master </span>
         </div>
       <ul className="space-y-2 mt-8">
          {/* <li >
@@ -87,15 +86,15 @@ export default function DashboardSidebar() {
          </Link> */}
           <Link href="/dashboard/addstudent">
          <li  onClick={toggleSidebar} >
-         <a  className={`cursor-pointer flex items-center p-2 ${currentPath=="/dashboard/addstudent" ? "text-violet-600" : 'text-gray-500' }  text-base font-normal  rounded-lg  hover:bg-gray-100 `}>
+         <a  className={`cursor-pointer flex items-center p-2 ${currentPath=="/dashboard/addstudent" ? "text-teal-600" : 'text-gray-500' }  text-base font-normal  rounded-lg  hover:bg-gray-100 `}>
             <IoIosAddCircle className="flex-shrink-0 w-6 h-6  transition duration-75   "/>
                <span className="flex-1 ml-3 whitespace-nowrap">Add students</span>
             </a>
          </li>
          </Link>
-        { token && role==="admin"&& <Link href="/dashboard/addteacher">
+        { token && role==="Admin"&& <Link href="/dashboard/addteacher">
          <li  onClick={toggleSidebar} >
-         <a  className={`cursor-pointer flex items-center p-2 ${currentPath=="/dashboard/addteacher" ? "text-violet-600" : 'text-gray-500' }  text-base font-normal  rounded-lg  hover:bg-gray-100 `}>
+         <a  className={`cursor-pointer flex items-center p-2 ${currentPath=="/dashboard/addteacher" ? "text-teal-600" : 'text-gray-500' }  text-base font-normal  rounded-lg  hover:bg-gray-100 `}>
             <IoIosAddCircle className="flex-shrink-0 w-6 h-6  transition duration-75   "/>
                <span className="flex-1 ml-3 whitespace-nowrap">Add Teachers</span>
             </a>
@@ -103,7 +102,7 @@ export default function DashboardSidebar() {
          </Link>}
          <Link href="/dashboard/viewallstudents">
          <li  onClick={toggleSidebar} >
-         <a  className={`cursor-pointer flex items-center p-2 ${currentPath=="/dashboard/viewallstudents" ? "text-violet-600" : 'text-gray-500' }  text-base font-normal  rounded-lg  hover:bg-gray-100 `}>
+         <a  className={`cursor-pointer flex items-center p-2 ${currentPath=="/dashboard/viewallstudents" ? "text-teal-600" : 'text-gray-500' }  text-base font-normal  rounded-lg  hover:bg-gray-100 `}>
              
                <BsFillEyeFill className="flex-shrink-0 w-6 h-6  transition duration-75   "/>
                <span className="flex-1 ml-3 whitespace-nowrap">View all students</span>
@@ -112,7 +111,7 @@ export default function DashboardSidebar() {
          </Link>
          <Link href="/dashboard/viewallteachers">
          <li  onClick={toggleSidebar} >
-         <a  className={`cursor-pointer flex items-center p-2 ${currentPath=="/dashboard/viewallteachers" ? "text-violet-600" : 'text-gray-500' }  text-base font-normal  rounded-lg  hover:bg-gray-100 `}>
+         <a  className={`cursor-pointer flex items-center p-2 ${currentPath=="/dashboard/viewallteachers" ? "text-teal-600" : 'text-gray-500' }  text-base font-normal  rounded-lg  hover:bg-gray-100 `}>
              
                <BsFillEyeFill className="flex-shrink-0 w-6 h-6  transition duration-75   "/>
                <span className="flex-1 ml-3 whitespace-nowrap">View all teachers</span>

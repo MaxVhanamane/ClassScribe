@@ -16,12 +16,15 @@ export default function Navbar() {
   } = useContext(AuthContext);
   return (
    
-<nav className="w-screen bg-gray-100 border-gray-200 px-2 sm:px-4 py-2 fixed z-20 top-0  " id="nav">
+<nav className="w-screen bg-gray-50 border-b border-gray-300/90  px-2 sm:px-4 py-2 fixed z-20 top-0  " id="nav">
   <div className=" flex flex-wrap  ">
    
     <div className='w-full relative sm:w-auto flex items-center justify-center'>
     <Link href="/">
-        <span className="self-center text-xl font-semibold whitespace-nowrap text-white bg-violet-900  rounded-xl  py-1 px-2 text-center">Attendance Master</span>
+  
+  <span className="text-xl font-semibold whitespace-nowrap text-white bg-teal-600 rounded-xl py-1 px-2">Attendance Master</span>
+
+
     </Link>
 
     <div className="absolute inset-x-0 left-0 flex items-center sm:hidden">
@@ -45,10 +48,10 @@ export default function Navbar() {
  { token&& <div className="hidden md:flex items-center justify-center sm:block sm:ml-6">
           <div className=" space-x-4 ">
             {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
-          <Link href="/"><a className={`${currentPath=="/" ? "text-violet-600" : 'text-gray-500' } hover:text-gray-700  px-3 py-2 rounded-md text-sm font-medium` }aria-current="page">Home</a></Link>
-        <Link href="/dashboard/addstudent"><a className={`text-gray-500 hover:text-gray-700  px-3 py-2 rounded-md text-sm font-medium` }aria-current="page">Dashboard</a></Link>
+          <Link href="/"><a className={`${currentPath=="/" ? "text-teal-500" : 'text-gray-500' } hover:text-teal-600  px-3 py-2 rounded-md text-sm font-medium` }aria-current="page">Home</a></Link>
+        <Link href="/dashboard/addstudent"><a className={`text-gray-500 hover:text-teal-600  px-3 py-2 rounded-md text-sm font-medium` }aria-current="page">Dashboard</a></Link>
 
-          <button onClick={()=>{removeToken()}} ><a className={`text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium` }aria-current="page">Logout</a></button>
+          <button onClick={()=>{removeToken()}} ><a className={`text-gray-500 hover:text-red-500 px-3 py-2 rounded-md text-sm font-medium` }aria-current="page">Logout</a></button>
       
           </div>
         </div>}
@@ -61,7 +64,7 @@ export default function Navbar() {
     <div className="px-2 pt-2 pb-3 space-y-1 flex flex-col z-">
     <ul className="flex flex-col space-y-2">
         <Link href="/"><li onClick={()=>{setShowToggler(!showToggler);setChangeHambIcon(!changeHambIcon)}}>
-          <a className={`${currentPath==="/" ? "text-violet-600" : 'text-gray-500'}  px-3 py-2 rounded-md text-sm font-medium`}>Home</a>
+          <a className={`${currentPath==="/" ? "text-teal-500" : 'text-gray-500'}  px-3 py-2 rounded-md text-sm font-medium`}>Home</a>
         </li></Link>
         <Link href="/dashboard/addstudent"><li onClick={()=>{setShowToggler(!showToggler);setChangeHambIcon(!changeHambIcon)}}>
           <a className={`text-gray-500  px-3 py-2 rounded-md text-sm font-medium`}>Dashboard</a>

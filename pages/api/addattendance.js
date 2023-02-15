@@ -1,6 +1,7 @@
 import connectDb from '../../middleware/mongoose';
 import AttendanceRecord from '../../models/attendancerecord';
 import Student from './../../models/students';
+const mongoose = require('mongoose');
 export default async function handler(req, res) {
     connectDb()
 
@@ -19,15 +20,15 @@ export default async function handler(req, res) {
         //     }
         //   })
         //   return res.send("hi")
-
+//  console.log("todaysAttendanceStarted",todaysAttendanceStarted)
+//  console.log("todaysAttendanceStarted.len",todaysAttendanceStarted.length)
         if(todaysAttendanceStarted.length!=0 && (allStudents.length!=todaysAttendanceStarted.length)){
             // const set2 = new Set(todaysAttendanceStarted.map(obj => obj.name));
-
             // // filter array1 to keep only objects whose name is not in the set
             // const filteredArray = allStudents.filter(obj => !set2.has(obj.name));
 
 let attendance = new AttendanceRecord({
-            name: req.body.name,
+            name: mongoose.Types.ObjectId(req.body._id),
             email: req.body.email,
             phone: req.body.phone,
             className: req.body.className,
@@ -50,6 +51,7 @@ let attendance = new AttendanceRecord({
         if (todaysAttendanceStarted.length <= 0) {
             let newArray = allStudents.map((data) => {
                 let obj = data.toObject();
+                obj.name=obj._id
                 delete obj._id;
                 delete obj.createdAt;
                 delete obj.updatedAt;
@@ -64,15 +66,24 @@ let attendance = new AttendanceRecord({
             try {
                 await AttendanceRecord.insertMany(newArray);
             } catch (error) {
-                res.status(200).send({ success: "false" })
+                console.log(error)
+               return res.status(200).send({ success: "false" })
             }
 
 
         }
         // If todaysAttendanceStarted.length>0 it means we already added attendance=NT for other students. now we will just update that.
         // Here I am not putting second operation in else statement because when first attendance starts, I will make all the students attendace of that particular class as NT then I will update the first students attendance. from second students attendance it doesn't go in if statement from there it will just update the old attendance that is set as NT.
-        await AttendanceRecord.findOneAndUpdate({ name: req.body.name, "date": { "$gte": startDate, "$lt": endDate } }, { attendance: req.body.attendance, date: req.body.date ,time:req.body.time})
-        res.status(200).send({ success: "success" })
+        try{
+
+            let a=await AttendanceRecord.findOneAndUpdate({ name: mongoose.Types.ObjectId(req.body._id), "date": { "$gte": startDate, "$lt": endDate } }, { attendance: req.body.attendance, date: req.body.date ,time:req.body.time})
+            return res.status(200).send({ success: true })
+        }
+        catch(err){
+            console.log(err)
+            return res.status(200).send({ success: false })
+
+        }
 
 
 

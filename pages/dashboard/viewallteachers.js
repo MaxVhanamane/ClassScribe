@@ -216,9 +216,9 @@ const handleEdit=async()=>{
         <link rel="icon" href="/favicon.ico" />
       </Head>
   <DashboardSidebar/>
-  <div className="lg:ml-60 sticky top-0 bg-violet-900 z-10">
-    <div className="  p-3 font-bold md:text-3xl text-2xl  mx-auto text-center shadow  text-gray-50 bg-violet-900 drop-shadow mb-8 "><h1 className="text-center mx-auto">Teacher list </h1></div></div>
-      <main className=' flex items-center justify-center flex-col lg:ml-60 sticky top-0 bg-[#f9fafb] z-10'>
+  <div className="lg:ml-60 sticky top-0 z-50">
+    <div className="  p-2 font-bold md:text-3xl text-2xl  mx-auto text-center shadow  text-gray-50 bg-teal-500 drop-shadow  "><h1 className="text-center mx-auto">Teacher list </h1></div></div>
+      <main className=' flex items-center justify-center flex-col lg:ml-60 '>
 
 
 
@@ -227,7 +227,7 @@ const handleEdit=async()=>{
           <div className='mt-6'>
         
             <div className='mt-2'>
-              <select className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 "
+              <select className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2 "
                 value={roleName}
                 defaultValue={"default"}
                 onChange={(e) => setRoleName(e.target.value)}
@@ -250,11 +250,11 @@ const handleEdit=async()=>{
 
           <div className=" flex mt-6 gap-2 ">
 
-            <button onClick={handleSearch} className="bg-emerald-500 p-1.5 rounded text-white mt-2"  >
+            <button onClick={handleSearch} className="bg-teal-600 hover:bg-teal-700 p-1.5 rounded text-white mt-2 ease-linear transition-all duration-150"  >
               Search
             </button>
 
-            <button onClick={handleViewAll} className="hidden md:block bg-emerald-500 p-1.5 rounded text-white mt-2"  >
+            <button onClick={handleViewAll} className="hidden md:block bg-teal-600 hover:bg-teal-700 p-1.5 rounded text-white mt-2 ease-linear transition-all duration-150"  >
               View All
             </button>
 
@@ -337,14 +337,14 @@ const handleEdit=async()=>{
 
                       setShowModal(true)
 
-                       }} className="bg-emerald-500 hover:bg-emerald-600 text-white rounded py-0.5 px-1  md:px-2 md:py-1" >Edit</button>
+                       }} className="bg-emerald-500 hover:bg-emerald-600 text-white rounded py-0.5 px-1  md:px-2 md:py-1 ease-linear transition-all duration-150" >Edit</button>
 
 <button onClick={(e) => { 
                       let confirmVal=confirm("Do you really want to delete?")
                       if(confirmVal){
                         handleDeleteTeacher(item)
                       }
-                       }} className="bg-red-500 hover:bg-red-600 text-white rounded py-0.5 px-1  md:px-2 md:py-1" >Delete</button>
+                       }} className="bg-red-500 hover:bg-red-600 text-white rounded py-0.5 px-1  md:px-2 md:py-1 ease-linear transition-all duration-150" >Delete</button>
                        </div>
                   </td>
                   
@@ -359,9 +359,9 @@ const handleEdit=async()=>{
         {showModal && (
 
 
-<div className=" bg-gray-100 h-fit absolute inset-0 flex items-center justify-center z-[120] ">
+<div className=" bg-gray-50 h-screen fixed inset-0 flex items-center justify-center overflow-scroll ">
 
-  <div className="bg-violet-900 mt-12  rounded-lg mb-10">
+  <div className="lg:ml-60 bg-teal-500 mt-60 md:mt-44  rounded-lg mb-10">
     {/* heading */}
   <div className="text-center font-bold text-xl mt-4 border-b border-solid border-slate-200">
     <h2 className="mb-2 text-gray-100">Edit the teacher details</h2>
@@ -413,30 +413,7 @@ const handleEdit=async()=>{
           focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="email"
           placeholder="Enter the mail id"/>
       </div>
-      
-      
-     
-      <div className="form-group mb-6">
-        <label htmlFor="role"  className="formLabel inline-block mb-2 text-gray-700">Role (set admin or teacher)</label>
-        <input onChange={handleChange} value={teacherDetails.role} name="role" type="text" className="form-control
-          block
-          w-full
-          px-3
-          py-1.5
-          text-base
-          font-normal
-          text-gray-700
-          bg-white bg-clip-padding
-          border border-solid border-gray-300
-          rounded
-          transition
-          ease-in-out
-          m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="role"
-          placeholder="Enter a Role"/>
-      </div>
-      
-     
+ 
       <div className="form-group mb-6">
         <label htmlFor="address"  className="formLabel inline-block mb-2 text-gray-700">Address</label>
         <input onChange={handleChange} value={teacherDetails.address} name="address" type="text" className="form-control
@@ -479,7 +456,24 @@ const handleEdit=async()=>{
       
      
 
-      
+      <div className="form-group mb-6">
+        <label htmlFor="role"  className="formLabel inline-block mb-2 text-gray-700">Role</label>
+        <select className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-600 block w-48 p-2 "
+                value={teacherDetails.role || 'default'}
+                onChange={(e) => setTeacherDetails((pre)=>({...pre,role:e.target.value}))}
+              >
+                <option value={"default"} className="text-center" disabled>
+                  Select the Role
+                </option>
+                <option value={"Admin"} className="text-center" >
+                  Admin
+                </option>
+                <option value={"Teacher"} className="text-center" >
+                Teacher
+                </option>
+
+              </select>
+      </div>
      
       
       
@@ -504,7 +498,7 @@ const handleEdit=async()=>{
                   </button>
                   <button
                   
-                    className="bg-emerald-500 text-white hover:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-blue-500 text-white hover:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => {handleEdit()
                     

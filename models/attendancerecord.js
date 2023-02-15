@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
 const AttendanceRecordSchema = new mongoose.Schema({
-    name: { type: String, required: true },
+    name: {type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Student',required: true},
     email: { type: String, required: true },
     phone:{type:Number,required:true},
     className: { type: String, required: true },

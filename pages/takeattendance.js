@@ -11,10 +11,11 @@ const newD=incomingData.map((d)=>{
   d.status="pending"
   return d
 })
+const [data,setData]=useState(newD)
+
 useEffect(()=>{
   localStorage.setItem("localData",JSON.stringify(newD))
 },[])
-const [data,setData]=useState(newD)
 
 const getIndianTime=()=>{
   const currentTime = new Date().getTime();
@@ -33,7 +34,7 @@ let x=JSON.parse(localStorage.getItem("localData"))
    if(index !== -1) {
     x[index] = { ...x[index], status:"done" };
     localStorage.setItem("localData",JSON.stringify(x))
-    let d=setData([...JSON.parse(localStorage.getItem("localData"))])
+    setData([...JSON.parse(localStorage.getItem("localData"))])
   }
 
 
@@ -71,7 +72,9 @@ let x=JSON.parse(localStorage.getItem("localData"))
     });
   }
 // as we are living in india so while adding the date we will add it in ISO format date:new Date().toISOString() 
-   const studentInformation = {name:studentInfo.name,email:studentInfo.email,className:studentInfo.className,division:studentInfo.division,rollNumber:studentInfo.rollNumber,attendance:attendance,date:getIndianTime(),time:new Date().toLocaleTimeString(),
+
+
+   const studentInformation = {_id:studentInfo._id,email:studentInfo.email,className:studentInfo.className,division:studentInfo.division,rollNumber:studentInfo.rollNumber,attendance:attendance,date:getIndianTime(),time:new Date().toLocaleTimeString(),
   genRegNumber:studentInfo.genRegNumber,caste:studentInfo.caste,subCaste:studentInfo.subCaste,DOB:studentInfo.DOB,phone:studentInfo.phone
   
   };
@@ -98,7 +101,7 @@ let x=JSON.parse(localStorage.getItem("localData"))
 
       <main className=' flex items-center justify-center flex-col'>
         
-        <h1 className= "w-full fixed mt-36 text-center p-2 text-white font-bold text-lg bg-violet-900">Student list for class {className}</h1>
+        <h1 className= "w-full fixed mt-36 text-center p-2 text-white font-bold text-lg bg-teal-500">Student list for class {className}</h1>
      
         {data.length>0?<div className="fixed top-[6.5rem]  h-[calc(100vh-6.5rem)] overflow-auto lg:w-3/4 w-full ">
           <div className="mb-16">

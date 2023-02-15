@@ -6,10 +6,11 @@ import { toast } from 'react-toastify';
 import DashboardSidebar from '../../components/DashboardSidebar';
 export default function ViewAllStudents({ allStudents }) {
 
-  const [data, setData] = useState(allStudents)
+  const [data, setData] = useState([])
+  const [dataToSortClassNameAndDiv,setDataToSortClassNameAndDiv]=useState(allStudents)
   const [showModal, setShowModal] = useState(false);
 
-  let classNm = data.map((cl) => { return cl.className })
+  let classNm = dataToSortClassNameAndDiv.map((cl) => { return cl.className })
   let uniqueclassNm = [...new Set(classNm)].sort(function (a, b) { return a - b; });
 
 // Edit student details
@@ -32,10 +33,9 @@ const [studentDetails,setStudentDetails]=useState({
 
   const [selectClass, setSelectClass] = useState();
   const [selectDivisionName, setselectDivisionName] = useState();
-  // const [uniqueDivisionName, setuniqueDivisionName] = useState();
+  const [checkStudents,setCheckStudents]=useState(false)
 
-
-  let division = data.map((div) => { return div.division })
+  let division = dataToSortClassNameAndDiv.map((div) => { return div.division })
   let uniqueDivisionName= [...new Set(division)].sort()
 
   // putting uniqueDivisionName in useEffect. because if I write it like uniqueclassNm then it will give you hydration error.
@@ -46,52 +46,53 @@ const [studentDetails,setStudentDetails]=useState({
 
   const handleSearch = async () => {
 
-
-    let data = { className: selectClass, division: selectDivisionName }
-    let response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getstudents`, {
-      method: 'POST', // or 'PUT'
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+    let foundStudents=dataToSortClassNameAndDiv.filter((data)=>{
+      if(data.className===selectClass && data.division===selectDivisionName){
+        return data
+      }
     })
-
-    let foundStudents = await response.json()
-    setData(foundStudents.students)
-
+if(foundStudents.length>0){
+  setCheckStudents(false)
+}
+else{
+  setCheckStudents(true)
+}
+    setData(foundStudents)
+setselectDivisionName("default")
+setSelectClass("default")
 
 
   }
 
-  const handleViewAll = async () => {
-
-
-    let response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getstudents`, {
-      method: 'GET', // or 'PUT'
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-
-    let foundStudents = await response.json()
-    setData(foundStudents.students)
-
-  }
 
 const handleDeleteStudent=async(item)=>{
-
-let data =item
+let studentInfo =item
     let response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/deletestudent`, {
       method: 'POST', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(studentInfo),
     })
 
     let result = await response.json()
     if(result.success){
-      toast.success('Student details deleted successfully!', {
+      // once the student information is deleted from db. we will remove it from here.(optimistic updates)
+      const newData=dataToSortClassNameAndDiv.filter((student)=>{
+        if(student._id!=studentInfo._id){
+          return studentInfo
+        }
+      })
+      setDataToSortClassNameAndDiv(newData)
+      
+      const newData2=data.filter((student)=>{
+        if(student._id!=studentInfo._id){
+          return studentInfo
+        }
+      })
+      console.log("newData2",newData2)
+      setData(newData2)
+      toast.success(result.message, {
         autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -100,18 +101,9 @@ let data =item
         progress: undefined,
       });
 
-      // if the user has not slected the class and division, then after deleting the student informatin we will show all the students data by calling handleViewAll.
-      //If the user has selected the class and the division, we will only show that class data to the user by calling handleSearch.
-      if(!selectClass || !selectDivisionName ){
-        handleViewAll()
-      }
-      else{
-        handleSearch()
-
-      }
     }
     else{
-      toast.error('Student details not found!', {
+      toast.error(result.message, {
         autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -200,7 +192,7 @@ setStudentDetails({
   
 }
 const handleEdit=async()=>{
-  const data = {_id:studentDetails._id,name:studentDetails.name,email:studentDetails.email,className:studentDetails.className,division:studentDetails.division,rollNumber:studentDetails.rollNumber,phone:studentDetails.phone,genRegNumber:studentDetails.genRegNumber,DOB:new Date(studentDetails.DOB),caste:studentDetails.caste,subCaste:studentDetails.subCaste};
+  const studentInfo = {_id:studentDetails._id,name:studentDetails.name,email:studentDetails.email,className:studentDetails.className,division:studentDetails.division,rollNumber:studentDetails.rollNumber,phone:studentDetails.phone,genRegNumber:studentDetails.genRegNumber,DOB:new Date(studentDetails.DOB),caste:studentDetails.caste,subCaste:studentDetails.subCaste};
    
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/editstudentdetails`, {
@@ -208,7 +200,7 @@ const handleEdit=async()=>{
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(studentInfo),
   })
   const response = await res.json()
   if(response.success){
@@ -220,16 +212,34 @@ const handleEdit=async()=>{
           draggable: true,
           progress: undefined,
         });
-   // if the user has not slected the class and division, then after updating the student informatin we will show all the students data by calling handleViewAll.
-      //If the user has selected the class and the division, we will only show that class data to the user by calling handleSearch.
-      if(!selectClass || !selectDivisionName ){
-        handleViewAll()
+// making optimistic updates. I can make a new request to get updated data but here I prefer doing optimistic updates.
+// get the index of the student information that just got updated
+      let index = data.findIndex(obj => obj._id === studentDetails._id);
+// create a copy of old data so that I can update state properly
+      let newData=[...data]
+// remove old student information and add new student information. response.data gives us updated student information.
+      newData.splice(index, 1, response.data)
+// I need old student information to check wheather the teacher/user changed the className or division. I can do that by comparing the old data and the new data I get from the server. because If teacher/user changes className or division I want to remove that student information from currently selected className and division. I can get the old student information using data[index]
+      let student=data[index]
+// set updated data
+      setData(newData)
+// if className or division has changed, that case we will handle it here.
+      if(student.className!=response.data.className || student.division != response.data.division){
+        let newFoundStudents=newData.filter((data)=>{
+          if(data.className===student.className && data.division===student.division){
+            return data
+          }
+        })
+        setData(newFoundStudents)
       }
-      else{
-        handleSearch()
-
-      }
-
+     
+// updating dataToSortClassNameAndDiv so that I can keep all the data in sync. because I am using dataToSortClassNameAndDiv in handleSearch. 
+// If I don't do this and do the search again then it will show old data.
+     let index2= dataToSortClassNameAndDiv.findIndex(obj => obj._id === studentDetails._id);
+     let newDataToSortClassNameAndDiv=[...dataToSortClassNameAndDiv]
+     newDataToSortClassNameAndDiv.splice(index2, 1, response.data)
+      
+      setDataToSortClassNameAndDiv(newDataToSortClassNameAndDiv)
   }
   else{
     toast.success('Some error occured, please try again later!', {
@@ -262,9 +272,9 @@ const handleEdit=async()=>{
         <link rel="icon" href="/favicon.ico" />
       </Head>
   <DashboardSidebar/>
-  <div className="lg:ml-60 sticky top-0 bg-violet-900 z-10">
-    <div className="  p-3 font-bold md:text-3xl text-2xl  mx-auto text-center shadow  text-gray-50 bg-violet-900 drop-shadow mb-8 "><h1 className="text-center mx-auto">Student list</h1></div></div>
-      <main className=' flex items-center justify-center flex-col lg:ml-60 sticky top-0 bg-[#f9fafb] '>
+  <div className="lg:ml-60 sticky top-0  z-10">
+    <div className="  p-2 font-bold md:text-3xl text-2xl  mx-auto text-center shadow  text-gray-50 bg-teal-500 drop-shadow  "><h1 className="text-center mx-auto">Student list</h1></div></div>
+      <main className=' flex items-center justify-center flex-col lg:ml-60 '>
 
 
 
@@ -273,7 +283,7 @@ const handleEdit=async()=>{
           <div className='mt-6'>
             
             <div className='mt-2'>
-              <select className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 "
+              <select className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2 "
                 value={selectClass}
                 defaultValue={"default"}
                 onChange={(e) => setSelectClass(e.target.value)}
@@ -292,7 +302,7 @@ const handleEdit=async()=>{
           <div className='mt-6'>
           
             <div className='mt-2'>
-              <select className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 "
+              <select className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2 "
                 value={selectDivisionName}
                 defaultValue={"default"}
                 onChange={(e) => setselectDivisionName(e.target.value)}
@@ -313,13 +323,13 @@ const handleEdit=async()=>{
 
           <div className=" flex mt-6 gap-2 ">
 
-            <button onClick={handleSearch} className="bg-emerald-500 p-1.5 rounded text-white mt-2"  >
+            <button onClick={handleSearch} className="bg-teal-600 hover:bg-teal-700 p-1.5 rounded text-white mt-2 ease-linear transition-all duration-150"  >
               Search
             </button>
-
-            <button onClick={handleViewAll} className="hidden md:block bg-emerald-500 p-1.5 rounded text-white mt-2"  >
+{/* 
+            <button onClick={handleViewAll} className="hidden md:block bg-teal-600 hover:bg-teal-700 p-1.5 rounded text-white mt-2 ease-linear transition-all duration-150"  >
               View All
-            </button>
+            </button> */}
 
           </div>
 
@@ -330,11 +340,11 @@ const handleEdit=async()=>{
 
 
 
-        {data.length > 0 ? <div className="overflow-x-auto relative  w-full p-1 lg:p-4">
+        {data.length > 0  ? <div className="overflow-x-auto relative  w-full p-1 lg:p-4">
           
-        <p onClick={handleViewAll} className="md:hidden text-right pr-2 text-blue-700 mt-2 hover:text-blue-600"  >
+        {/* <p onClick={handleViewAll} className="md:hidden text-right pr-2 text-blue-700 mt-2 hover:text-blue-600"  >
               View All students
-            </p>
+            </p> */}
           <table className="w-full text-sm text-left text-gray-500  mt-4">
             <thead className="text-xs text-gray-700 uppercase border-b border-r-0 border-collapse bg-gray-50 ">
               <tr >
@@ -444,14 +454,14 @@ const handleEdit=async()=>{
 
                       setShowModal(true)
 
-                       }} className="bg-emerald-500 hover:bg-emerald-600 text-white rounded py-0.5 px-1  md:px-2 md:py-1" >Edit</button>
+                       }} className="bg-emerald-500 hover:bg-emerald-600 text-white rounded py-0.5 px-1  md:px-2 md:py-1 ease-linear transition-all duration-150" >Edit</button>
 
 <button onClick={(e) => { 
                       let confirmVal=confirm("Do you really want to delete?")
                       if(confirmVal){
                         handleDeleteStudent(item)
                       }
-                       }} className="bg-red-500 hover:bg-red-600 text-white rounded py-0.5 px-1  md:px-2 md:py-1" >Delete</button>
+                       }} className="bg-red-500 hover:bg-red-600 text-white rounded py-0.5 px-1  md:px-2 md:py-1 ease-linear transition-all duration-150" >Delete</button>
                        </div>
                   </td>
                   
@@ -460,16 +470,16 @@ const handleEdit=async()=>{
 
             </tbody>
           </table>
-        </div> : <div className="flex justify-center items-center shadow-sm my-20 p-10 text-red-500">No Student records found! Please add Students. </div>}
+        </div> : <div className="flex justify-center items-center font-bold my-12 p-10 text-teal-500">{checkStudents ?<p className="text-red-500">No student records found! Please add students</p>:<p>Please select classname and division</p>} </div>}
 
 
 
         {showModal && (
 
       
-<div className=" bg-gray-100 h-full w-full absolute inset-0 flex items-center justify-center z-[120] ">
+<div className="bg-gray-50 h-screen fixed inset-0 flex items-center justify-center overflow-scroll">
 
-<div className="bg-violet-900 mt-12  rounded-lg mb-10">
+<div className="bg-teal-500  rounded-lg mb-10 mt-[45rem] md:mt-[25rem] lg:mt-[40rem] lg:ml-60 ">
   {/* heading */}
 <div className="text-center font-bold text-xl mt-4 border-b border-solid border-slate-200">
   <h2 className="mb-2 text-gray-100">Edit the student details</h2>
@@ -714,7 +724,7 @@ const handleEdit=async()=>{
                   </button>
                   <button
                   
-                    className="bg-emerald-500 text-white hover:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-blue-500 text-white hover:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => {handleEdit()
                     

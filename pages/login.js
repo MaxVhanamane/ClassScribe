@@ -82,18 +82,18 @@ else{
     <title>AttendanceNotifier - Login</title>
     <meta name="description" content="Login page" />
    </Head>
-    <section className="h-screen gradient-form  ">
+    <section className="h-screen gradient-form  bg-gray-50 ">
     <div className=" py-12 px-6 h-full">
    
-      <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
-        <div className="xl:w-6/12 md:w-3/4">
-          <div className="block bg-white shadow-lg rounded-lg">
+      <div className="flex justify-center items-center flex-wrap h-full text-gray-800">
+        <div className="w-full xl:w-6/12 md:w-3/4 ">
+          <div className="block bg-gradient-to-r from-teal-300 to-gray-50 border border-teal-600 shadow-md shadow-teal-500 rounded-lg ">
             <div className="flex justify-center items-center g-0">
               <div className=" px-4 md:px-0">
                 <div className="md:p-12 md:mx-6">
-                  <div className="text-center rounded-full">
-                   
-                    <h4 className="text-2xl font-bold mt-1 mb-5 pb-1">Login</h4>
+                  <div className="flex items-center justify-center flex-col">
+                   <div className=" w-[3.25rem] h-[3.25rem] flex items-center justify-center text-white rounded-full font-bold mt-6 md:mt-auto shadow-xl shadow-white animate-changeBg "><p>AM</p></div>
+                    <h4 className="text-xl md:text-2xl font-bold  mb-5 mt-2 pb-1 text-gray-700">Login to your account</h4>
                   </div>
                   <form onSubmit={handleLogin}>
                     {/* <p className="mb-4">Please login to your account</p> */}
@@ -101,7 +101,7 @@ else{
                       <input 
                       onChange={handleChange}
                         type="email"
-                        className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                        className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-600 focus:outline-none"
                         id="email"
                         placeholder="Email"
                         name="email"
@@ -111,15 +111,15 @@ else{
                       <input
                       onChange={handleChange}
                         type="password"
-                        className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                        className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-600 focus:outline-none"
                         id="password"
                         placeholder="Password"
                         name="password"
                       />
                     </div>
-                    <div className="text-center pt-1 mb-12 pb-1">
+                    <div className="text-center pt-1 mb-10 pb-1">
                       <button
-                        className=" bg-violet-900 inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight  rounded shadow-md   active:shadow-lg transition duration-150 ease-in-out w-full mb-3 pink_btn "
+                        className=" bg-teal-500 hover:bg-teal-600 ease-linear transition-all duration-150 inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight  rounded shadow-md   active:shadow-lg  w-full mb-3 "
       
                         data-mdb-ripple="true"
                         data-mdb-ripple-color="light"
@@ -128,7 +128,7 @@ else{
                       >
                         Log in
                       </button>
-                     <Link href="/forgotpassword" className="text-gray-500">Forgot password?</Link>
+                     <Link href="/forgotpassword" ><span className="text-gray-600 hover:text-gray-800 ease-linear transition-all duration-150 font-semibold text-md cursor-pointer">Forgot password?</span></Link>
                     </div>
                   
                   </form>

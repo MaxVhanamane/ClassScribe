@@ -159,8 +159,8 @@ const handleChange=(e)=>{
    </Head>
    <DashboardSidebar/>
  
-    <div className="lg:ml-60 sticky top-0 bg-violet-900 z-10">
-    <div className="  p-3 font-bold md:text-3xl text-2xl  mx-auto text-center shadow  text-gray-50 bg-violet-900 drop-shadow mb-8 "><h1 className="text-center mx-auto">Add a student</h1></div></div>
+    <div className="lg:ml-60 sticky top-0  z-10">
+    <div className="  p-2 font-bold md:text-3xl text-2xl  mx-auto text-center shadow  text-gray-50 bg-teal-500 drop-shadow mb-8 "><h1 className="text-center mx-auto">Add a student</h1></div></div>
     <div className='lg:ml-28 p-6  pt-6 flex justify-center w-full'>
     
     <div className="block p-6 rounded-lg shadow-lg bg-white w-[50rem]  mb-28">
@@ -181,7 +181,7 @@ const handleChange=(e)=>{
           transition
           ease-in-out
           m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="name"
+          focus:text-gray-700 focus:bg-white focus:border-teal-600 focus:outline-none" id="name"
           placeholder="Enter a name"/>
       </div>
       
@@ -202,7 +202,7 @@ const handleChange=(e)=>{
           transition
           ease-in-out
           m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="email"
+          focus:text-gray-700 focus:bg-white focus:border-teal-600 focus:outline-none" id="email"
           placeholder="Enter a parent's mail id"/>
       </div>
 
@@ -222,7 +222,7 @@ const handleChange=(e)=>{
           transition
           ease-in-out
           m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="phone"
+          focus:text-gray-700 focus:bg-white focus:border-teal-600 focus:outline-none" id="phone"
           placeholder="Enter the phone number"/>
       </div>
       
@@ -243,7 +243,7 @@ const handleChange=(e)=>{
           transition
           ease-in-out
           m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="classname"
+          focus:text-gray-700 focus:bg-white focus:border-teal-600 focus:outline-none" id="classname"
           placeholder="Enter a class name"/>
       </div>
       
@@ -264,7 +264,7 @@ const handleChange=(e)=>{
           transition
           ease-in-out
           m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="division"
+          focus:text-gray-700 focus:bg-white focus:border-teal-600 focus:outline-none" id="division"
           placeholder="Enter a division name"/>
       </div>
       
@@ -285,7 +285,7 @@ const handleChange=(e)=>{
           transition
           ease-in-out
           m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="rollnumber"
+          focus:text-gray-700 focus:bg-white focus:border-teal-600 focus:outline-none" id="rollnumber"
           placeholder="Enter a roll number"/>
       </div>
       
@@ -307,7 +307,7 @@ const handleChange=(e)=>{
           transition
           ease-in-out
           m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="genRegNumber"
+          focus:text-gray-700 focus:bg-white focus:border-teal-600 focus:outline-none" id="genRegNumber"
           placeholder="Enter general register number"/>
       </div>
      
@@ -328,7 +328,7 @@ const handleChange=(e)=>{
           transition
           ease-in-out
           m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="DOB"
+          focus:text-gray-700 focus:bg-white focus:border-teal-600 focus:outline-none" id="DOB"
           placeholder="Enter date of birth"/>
       </div>
       
@@ -349,7 +349,7 @@ const handleChange=(e)=>{
           transition
           ease-in-out
           m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="caste"
+          focus:text-gray-700 focus:bg-white focus:border-teal-600 focus:outline-none" id="caste"
           placeholder="Enter caste"/>
       </div>
       
@@ -370,7 +370,7 @@ const handleChange=(e)=>{
           transition
           ease-in-out
           m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="subCaste"
+          focus:text-gray-700 focus:bg-white focus:border-teal-600 focus:outline-none" id="subCaste"
           placeholder="Enter subcaste"/>
       </div>
       
@@ -382,7 +382,7 @@ const handleChange=(e)=>{
       <button onClick={handleAdd} type="submit" className="
         px-6
         py-2.5
-        bg-violet-900
+        bg-teal-600
         text-white
         font-medium
         text-xs
@@ -390,9 +390,8 @@ const handleChange=(e)=>{
         uppercase
         rounded
         shadow-md
-        hover:bg-violet-800 hover:shadow-lg
-        focus:bg-violet-700 focus:shadow-lg focus:outline-none focus:ring-0
-        active:bg-violet-800 active:shadow-lg
+        hover:bg-teal-700 hover:shadow-lg
+        active:bg-teal-800 active:shadow-lg
         transition
         duration-150
         ease-in-out">Add</button>

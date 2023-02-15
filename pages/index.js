@@ -23,14 +23,14 @@ export default function Home({allStudents}) {
 
     </Head>
 <div className='lg:mb-28 mb-36'>
-<div className=' flex flex-col items-center justify-center'>
-<h1 className=' mb-4 bg-violet-900 w-full text-white text-lg text-center py-1'><span className='animate-pulse'>Attendance with notification</span> </h1>
+<div className=' flex flex-col items-center justify-center mt-[3.25rem]'>
+<h1 className='bg-teal-500 w-full text-white text-lg text-center py-1'><span className='animate-pulse'>Attendance with notification</span> </h1>
 
 
 </div>
  <div>
 
-<h1 className='text-center text-purple-900 font-bold md:text-2xl text-xl mx-1 mt-10'> Select Class and division</h1>
+<h1 className='text-center text-gray-700 font-bold md:text-2xl text-xl mx-1 mt-6'> Select Class and division</h1>
 </div>
  <Select allStudents={allStudents} />
 

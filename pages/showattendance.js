@@ -6,41 +6,49 @@ import DatePicker from "react-datepicker";
 import autoTable from 'jspdf-autotable';
 import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from 'next/router';
+import { v4 as uuidv4 } from 'uuid';
 export default function Attendancerecord({ allStudents, classNameValue }) {
     const router = useRouter();
     const { className, division } = router.query;
-    const [data, setData] = useState([])
+    const [attendance, setAttendance] = useState([])
     const [studentDetails, setStudentDetails] = useState(allStudents)
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [showAttendace, setShowAttendance] = useState(false)
-    let dates = data.map((item) => {
+    let dates = attendance.map((item) => {
         return parseInt(item.date.split("T")[0].split("-")[2])
     })
     let uniqueDates = [...new Set(dates.sort())];
+    // using the student list (i.e studentDetails) to map over the attendance and get the attendance of an individual student.
+    //later we will use studentAttendance to display it accordingly
+    // first sort the students using roll number then sort their attendance using the date. then we can directly use it.
+    // The array structure will consist of sub-arrays, where each sub-array represents the attendance of a specific student (which looks like this  [["P","A","P"],["A","P","P"],....] ). 
+    //The first element in the sub-array indicates the attendance of the student with roll number 1, the second element in the sub-array indicates the attendance
+    // of the student with roll number 2, and so on.
+    let studentAttendance = studentDetails.sort((d, e) => { return d.rollNumber - e.rollNumber }).map((item, index) => {
 
-    let impData = studentDetails.sort((d, e) => { return d.rollNumber - e.rollNumber }).map((item, index) => {
-
-        let b = data?.filter(x => { return x.name === item.name }).sort(function (a, b) {
+        let b = attendance?.filter(x => {
+            // here x.name is a foreign key in attendance collection which is equal to the student _id
+            return x.name === item._id
+        }).sort(function (a, b) {
             return new Date(a.date) - new Date(b.date);
         })
-        if(b.length===0){
-            b.push({name:item.name})
-        }
+// Suppose we already have 10 students added and their 10-day attendance has been taken. If we later add an 11th student and take their attendance, the table may not display the attendance properly. To make the data look properly we will add dummy data.(To determine the number of dummy objects we need to add, we will subtract the length of b from the length of uniqueDates using uniqueDates.length - b.length.). 
+// Suppose we have 30 unique dates and the attendance of the new student has only been recorded for 10 days. To match the table correctly, we need to add 20 more dummy objects.".
         if (b.length != uniqueDates.length) {
             let newArray = uniqueDates.slice(0, uniqueDates.length - b.length);
             newArray.forEach(() => {
-                b.unshift("Max")
+                b.unshift({_id:uuidv4(),attendance:""})
             })
 
         }
+
         return b
     })
-
-
+   
     const getData = async () => {
 
-        const getIsoDate=(a)=>{
+        const getIsoDate = (a) => {
             // adding offset so that it can match indian time
             const dt = new Date(a);
             dt.setHours(dt.getHours() + 5);
@@ -48,7 +56,7 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
             const isoString = dt.toISOString();
             return isoString
         }
-    
+
         let sDate = getIsoDate(startDate).substring(0, 10) + "T00:00:00Z"
         let eDate = getIsoDate(endDate).substring(0, 10) + "T23:59:59Z"
         let data = { sDate, eDate, className, division }
@@ -60,7 +68,7 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
             body: JSON.stringify(data),
         })
         let studentsData = await res.json()
-        setData(() => studentsData.students)
+        setAttendance(studentsData.students)
         setShowAttendance(true)
     }
 
@@ -73,7 +81,7 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
     }
     return (
         <>
-            <div className='w-full flex items-center justify-center flex-col md:flex-row fixed top-[3.25rem] z-10 bg-gray-50  border-b border-gray-800 pb-6 pt-4'>
+            <div className='w-full flex items-center justify-center flex-col md:flex-row fixed top-[3.25rem] z-10 bg-gray-50  border-b border-gray-300/90 pb-6 pt-4'>
                 <div className="flex gap-1">
                     <div className='flex flex-col md:flex-row gap-2 md:mx-2'>
 
@@ -91,8 +99,8 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
                     </div>
                 </div>
                 <div className='flex mt-2 md:mt-auto'>
-                    <button className='m-2  text-center bg-violet-900 text-white rounded p-0.5 px-1' onClick={getData}>Get attendance</button>
-                    <button className='m-2  text-center bg-violet-900 text-white rounded p-0.5 px-1' onClick={getPdf}>Download pdf</button>
+                    <button className='m-2  text-center bg-teal-500 hover:bg-teal-600 ease-linear transition-all duration-150 text-white rounded p-0.5 px-1' onClick={getData}>Get attendance</button>
+                    <button className='m-2  text-center bg-teal-500 hover:bg-teal-600 ease-linear transition-all duration-150 text-white rounded p-0.5 px-1' onClick={getPdf}>Download pdf</button>
                 </div>
 
             </div>
@@ -102,7 +110,7 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
 
             </div>
             {showAttendace ? <div>
-                {data.length > 0 ? <div className=" fixed top-52 h-[calc(100vh-13rem)]  overflow-auto  w-full  lg:px-12 mb-20" >
+                {attendance.length > 0 ? <div className=" fixed top-52 h-[calc(100vh-13rem)]  overflow-auto  w-full  lg:px-12 mb-20" >
                     <div className="pb-16">
                         <table className=" w-full overflow-auto text-sm text-left text-gray-500 " id="table_pdf" >
 
@@ -146,6 +154,9 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
                                     </th>
                                     <th scope="col" className="py-3 px-2 text-center">
                                         Absent days
+                                    </th>
+                                    <th scope="col" className="py-3 px-2 text-center">
+                                        NT days
                                     </th>
 
                                 </tr>
@@ -216,34 +227,47 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
                                         <td className="py-4 px-2 text-center">
                                             {item.name}
                                         </td>
-                                        {/* // Turn your strings into dates, and then subtract them
-  // to get a value that is either negative, positive, or zero. */}
-                                        {/* {     console.log(  data.filter(x => { return x.name === item.name }).sort(function(a,b){
- 
-  return new Date(a.date) - new Date(b.date);
-}))} */}
-
-                                        {/* {console.log(data.filter(x => { return x.name === item.name }))} */}
 
 
+ {/* here I am using two find methods and then map method to get desired result, because studentAttendance is an array of arrays.
+ and the array that are inside are already according to roll number and the attendace is sorted according to date so find method is doing nothing but helping to achieve the desired result 
+ that I want */}
 
-                                        {impData?.find(array => {
-                                            return array?.find(obj => obj.name === item.name)
-                                        }).map((i, index) => {
-                                            return <td key={index} className={`py-4 ${i.attendance === "NT" ? "text-red-600" : null} font-semibold px-2 text-center`}>
+                                        {studentAttendance?.find(array => {
+                                            return array?.find(obj => obj?.name === item?._id)
+                                        })?.map((i) => {
+                                            return <td key={i._id} className={`py-4 ${i.attendance === "NT" ? "text-red-600" : null} font-semibold px-2 text-center`}>
                                                 {i.attendance}
                                             </td>
                                         })}
+{/* you can use following code also. to iterate over the attendance. but find method stops as soon as it finds and filter doesn't it iterates over all the elements. */}
+                                        {/* {studentAttendance?.map((array) => {
+                                            return array.filter((obj) => {
+                                                if (obj?.name === item?._id)
+                                                    return obj;
+                                            }).map((obj, index) => {
+                                                return <td key={index} className={`py-4 ${obj.attendance === "NT" ? "text-red-600" : null} font-semibold px-2 text-center`}>
+                                                    {obj.attendance}
+                                                </td>
+                                            })
+
+                                        })} */}
+
 
                                         <td className="py-4 px-2 text-center">
                                             {
-                                                data.filter(x => { return x.name === item.name }).filter(item => item.attendance === 'P').length
+                                                attendance.filter(x => { return x.name === item._id }).filter(item => item.attendance === 'P').length
                                             }
                                         </td>
 
                                         <td className="py-4 px-2 text-center">
                                             {
-                                                data.filter(x => { return x.name === item.name }).filter(item => item.attendance === 'A').length
+                                                attendance.filter(x => { return x.name === item._id }).filter(item => item.attendance === 'A').length
+                                            }
+                                        </td>
+                                        <td className="py-4 px-2 text-center">
+                                            {
+                                                attendance.filter(x => { return x.name === item._id }).filter(item => item.attendance === 'NT').length
                                             }
                                         </td>
 
@@ -258,7 +282,7 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
                 </div> : <div className="flex justify-center items-center font-semibold fixed w-full my-52 py-10 px-4 text-red-500">No attendance records found! </div>}
 
 
-            </div> : <div className="flex justify-center font-semibold items-center fixed w-full my-52 py-10 px-4 text-violet-900 animate-pulse">Select the date range to view attendance. </div>}
+            </div> : <div className="flex justify-center font-semibold items-center fixed w-full my-52 py-10 px-4 text-teal-600 animate-pulse">Select the date range to view attendance. </div>}
         </>
     )
 }
