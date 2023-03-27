@@ -16,7 +16,7 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
     const [endDate, setEndDate] = useState(new Date());
     const [showAttendace, setShowAttendance] = useState(false)
     let dates = attendance.map((item) => {
-        return parseInt(item.date.split("T")[0].split("-")[2])
+        return parseInt(item.date.split("T")[0].split("-")[1]+item.date.split("T")[0].split("-")[2])
     })
     let uniqueDates = [...new Set(dates.sort())];
     // using the student list (i.e studentDetails) to map over the attendance and get the attendance of an individual student.
@@ -68,7 +68,7 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
             body: JSON.stringify(data),
         })
         let studentsData = await res.json()
-        setAttendance(studentsData.students)
+        setAttendance(studentsData.studentsAttendanceRecord)
         setShowAttendance(true)
     }
 
@@ -99,8 +99,8 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
                     </div>
                 </div>
                 <div className='flex mt-2 md:mt-auto'>
-                    <button className='m-2  text-center bg-teal-500 hover:bg-teal-600 ease-linear transition-all duration-150 text-white rounded p-0.5 px-1' onClick={getData}>Get attendance</button>
-                    <button className='m-2  text-center bg-teal-500 hover:bg-teal-600 ease-linear transition-all duration-150 text-white rounded p-0.5 px-1' onClick={getPdf}>Download pdf</button>
+                    <button className='m-2  text-center bg-teal-500 hover:bg-teal-600 ease-linear transition-all duration-150 text-white rounded p-0.5 px-2' onClick={getData}>Get attendance</button>
+                    <button className='m-2  text-center bg-teal-500 hover:bg-teal-600 ease-linear transition-all duration-150 text-white rounded p-0.5 px-2' onClick={getPdf}>Download pdf</button>
                 </div>
 
             </div>
@@ -146,7 +146,10 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
                 </th> */}
 
                                     {uniqueDates.map((item) => {
-                                        return <th key={item} scope="col" className="py-3 px-2 text-center"> {item} </th>
+                                        return <th key={item} scope="col" className="py-3 px-2 text-center"> {
+                                            ["10","11","12"].includes(item.toString().slice(0,2)) ?item.toString().slice(2) +"/"+item.toString().slice(0,2) : item.toString().slice(1) +"/"+item.toString().slice(0,1)
+
+                                            } </th>
                                     })}
 
                                     <th scope="col" className="py-3 px-2 text-center">

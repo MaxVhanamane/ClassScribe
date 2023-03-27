@@ -8,7 +8,6 @@ export default async function handler(req,res){
         try{
             let deleteStudent = await Student.findOneAndDelete(req.body)
            let attendance= await AttendanceRecord.deleteMany({name:req.body._id,DOB:req.body.DOB})
-           console.log(attendance)
             if(deleteStudent){
     
                 res.status(200).json({ success: true,message:"Student details deleted successfully!" })

@@ -24,7 +24,7 @@ export default function Home({allStudents}) {
     </Head>
 <div className='lg:mb-28 mb-36'>
 <div className=' flex flex-col items-center justify-center mt-[3.25rem]'>
-<h1 className='bg-teal-500 w-full text-white text-lg text-center py-1'><span className='animate-pulse'>Attendance with notification</span> </h1>
+<h1 className='bg-teal-500 w-full text-white text-lg text-center py-1'><span className='animate-pulse hidden md:block'>Effortlessly Take and Track Attendance with Real-Time Notifications</span><span className='animate-pulse md:hidden'>Attendance with notification</span> </h1>
 
 
 </div>

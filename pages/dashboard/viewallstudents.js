@@ -90,7 +90,6 @@ let studentInfo =item
           return studentInfo
         }
       })
-      console.log("newData2",newData2)
       setData(newData2)
       toast.success(result.message, {
         autoClose: 2000,

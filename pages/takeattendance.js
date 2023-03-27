@@ -49,8 +49,8 @@ let x=JSON.parse(localStorage.getItem("localData"))
       body: JSON.stringify(reqData),
     })
 
-   let rec=await res.json()
-  if(rec.success){
+   let mailResponse=await res.json()
+  if(mailResponse.success){
     
       toast.success('Email sent successfully!', {
           autoClose: 2000,

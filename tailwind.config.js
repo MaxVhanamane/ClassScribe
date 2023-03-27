@@ -23,6 +23,7 @@ module.exports = {
       
       animation: {
         changeBg: "changeBg 5s ease-in-out infinite",
+        changeBg2: "changeBg 5s ease-in-out infinite",
         'pulse': 'pulse 1s ease-in-out 2'
 
 

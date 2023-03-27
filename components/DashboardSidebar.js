@@ -4,7 +4,7 @@ import { IoIosAddCircle } from "react-icons/io";
 import { BsFillEyeFill } from "react-icons/bs";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { RiCloseCircleFill } from "react-icons/ri";
-import { GiHamburgerMenu } from "react-icons/gi";
+import { GiDeskLamp, GiHamburgerMenu } from "react-icons/gi";
 import { AiFillHome } from "react-icons/ai";
 import { useRouter } from 'next/router';
 
@@ -57,7 +57,8 @@ export default function DashboardSidebar() {
   </div>
         <div className="flex-shrink-0 flex ">
        
-          <span className="block h-8 w-auto text-white px-2 rounded-xl bg-teal-600 font-bold text-xl">Attendance Master </span>
+        <p className="flex text-xl  hover:animate-changeBg2 transition duration-500  items-center justify-center gap-1 py-0.5 px-2 font-bold antialiased text-gray-50 border border-teal-400 rounded-lg bg-teal-600 cursor-pointer ">
+  <GiDeskLamp className="text-2xl text-gray-50 "/> <span className="h-8">Attendance Master</span>  </p>
         </div>
       <ul className="space-y-2 mt-8">
          {/* <li >
@@ -100,6 +101,15 @@ export default function DashboardSidebar() {
             </a>
          </li>
          </Link>}
+         <Link href="/dashboard/editattendance">
+         <li  onClick={toggleSidebar} >
+         <a  className={`cursor-pointer flex items-center p-2 ${currentPath=="/dashboard/editattendance" ? "text-teal-600" : 'text-gray-500' }  text-base font-normal  rounded-lg  hover:bg-gray-100 `}>
+             
+               <BsFillEyeFill className="flex-shrink-0 w-6 h-6  transition duration-75   "/>
+               <span className="flex-1 ml-3 whitespace-nowrap">Edit Attendance</span>
+            </a>
+         </li>
+         </Link>
          <Link href="/dashboard/viewallstudents">
          <li  onClick={toggleSidebar} >
          <a  className={`cursor-pointer flex items-center p-2 ${currentPath=="/dashboard/viewallstudents" ? "text-teal-600" : 'text-gray-500' }  text-base font-normal  rounded-lg  hover:bg-gray-100 `}>
