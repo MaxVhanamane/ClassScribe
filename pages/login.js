@@ -79,7 +79,7 @@ else{
   return (
     <>
     <Head>
-    <title>AttendanceNotifier - Login</title>
+    <title>AttendanceMaster - Login</title>
     <meta name="description" content="Login page" />
    </Head>
     <section className="h-screen gradient-form  bg-gray-50 ">

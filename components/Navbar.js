@@ -23,7 +23,6 @@ export default function Navbar() {
     <div className='w-full relative sm:w-auto flex  items-center justify-center '>
     <Link href="/">
   
-  {/* <span className="text-xl font-semibold whitespace-nowrap text-white bg-teal-600 rounded-xl py-1 px-2">Attendance Master</span> */}
 <p className="flex text-xl  hover:animate-changeBg2 items-center justify-center gap-1 py-0.5 px-2 font-bold antialiased text-gray-50 border border-teal-400 rounded-lg bg-teal-600 cursor-pointer ">
   <GiDeskLamp className="text-2xl text-gray-50 "/> <span className="h-8">Attendance Master</span>  </p>
 

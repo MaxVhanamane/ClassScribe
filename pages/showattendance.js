@@ -7,6 +7,8 @@ import autoTable from 'jspdf-autotable';
 import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
+import {TbCircle} from "react-icons/tb"
+import {TbCircleCheck} from "react-icons/tb"
 export default function Attendancerecord({ allStudents, classNameValue }) {
     const router = useRouter();
     const { className, division } = router.query;
@@ -15,6 +17,78 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [showAttendace, setShowAttendance] = useState(false)
+    const [hideColumns,setHideColumns]=useState({
+        srno:false,
+        grno:false,
+        dob:false,
+        caste:false,
+        subcaste:false,
+        ntdays:false,
+    })
+
+    const handleColumnHide=(e)=>{
+        if(e.currentTarget.name==="srno"){
+            setHideColumns({
+                ...hideColumns,
+                srno:!hideColumns.srno
+            })
+        }
+        if(e.currentTarget.name==="grno"){
+            setHideColumns({
+                ...hideColumns,
+                grno:!hideColumns.grno
+            })
+        }
+        if(e.currentTarget.name==="dob"){
+            setHideColumns({
+                ...hideColumns,
+                dob:!hideColumns.dob
+            })
+        }
+        if(e.currentTarget.name==="caste"){
+            setHideColumns({
+                ...hideColumns,
+                caste:!hideColumns.caste
+            })
+        }
+        if(e.currentTarget.name==="subcaste"){
+            setHideColumns({
+                ...hideColumns,
+                subcaste:!hideColumns.subcaste
+            })
+        }
+        if(e.currentTarget.name==="ntdays"){
+            setHideColumns({
+                ...hideColumns,
+                ntdays:!hideColumns.ntdays
+            })
+        }
+        if(e.currentTarget.name==="all"){
+            if(Object.values(hideColumns).every(value => value === true)) {
+                setHideColumns({
+                    ...hideColumns,
+                    srno:false,
+                    grno:false,
+                    dob:false,
+                    caste:false,
+                    subcaste:false,
+                    ntdays:false
+                }) 
+            }
+            else{
+                setHideColumns({
+                    ...hideColumns,
+                    srno:true,
+                    grno:true,
+                    dob:true,
+                    caste:true,
+                    subcaste:true,
+                    ntdays:true
+                })
+            }
+           
+        }
+    }
     let dates = attendance.map((item) => {
         return parseInt(item.date.split("T")[0].split("-")[1]+item.date.split("T")[0].split("-")[2])
     })
@@ -83,7 +157,7 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
         <>
             <div className='w-full flex items-center justify-center flex-col md:flex-row fixed top-[3.25rem] z-10 bg-gray-50  border-b border-gray-300/90 pb-6 pt-4'>
                 <div className="flex gap-1">
-                    <div className='flex flex-col md:flex-row gap-2 md:mx-2'>
+                    <div className='flex flex-col md:flex-row gap-2 md:mx-1'>
 
                         <p className='my-auto mx-2 md:mx-auto'>Start Date:</p>
                         <div>
@@ -104,31 +178,46 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
                 </div>
 
             </div>
-            <div>
+          <div>
 
-                <h1 className='fixed top-36 w-full text-center font-bold  text-gray-800 lg:text-3xl text-xl mb-1 pb-4 '>{`Attendance of grade ${classNameValue}  students`} </h1>
+                <h1 className='fixed md:top-36 top-52 w-full text-center font-bold  text-gray-800 lg:text-2xl text-xl  '>{`Attendance of grade ${classNameValue}  students`} </h1>
+                {  (showAttendace&& attendance.length > 0) && <div className='fixed md:top-44 top-[14.5rem]  w-full flex items-center justify-center flex-wrap   text-gray-800  mb-1 pb-4 mt-2 gap-2'> <span className="font-semibold">Hide Columns:</span> 
+                <button className="flex items-center justify-center gap-1 md:text-sm text-xs font-semibold" name="srno" onClick={handleColumnHide}> {hideColumns.srno?<TbCircleCheck className="text-red-500 "/>:<TbCircle   className="text-teal-500" />}SR.NO</button>
 
+                <button className="flex items-center justify-center gap-1 md:text-sm text-xs font-semibold" name="grno" onClick={handleColumnHide}> {hideColumns.grno?<TbCircleCheck className="text-red-500"/>:<TbCircle className="text-teal-500" />}GR.NO</button>
+
+                <button className="flex items-center justify-center gap-1 md:text-sm text-xs font-semibold" name="dob" onClick={handleColumnHide}> {hideColumns.dob?<TbCircleCheck className="text-red-500"/>:<TbCircle className="text-teal-500" />}DOB</button>
+
+                <button className="flex items-center justify-center gap-1 md:text-sm text-xs font-semibold" name="caste" onClick={handleColumnHide}> {hideColumns.caste?<TbCircleCheck className="text-red-500"/>:<TbCircle className="text-teal-500" />}CASTE</button>
+                
+                <button className="flex items-center justify-center gap-1 md:text-sm text-xs font-semibold" name="subcaste" onClick={handleColumnHide}> {hideColumns.subcaste?<TbCircleCheck className="text-red-500"/>:<TbCircle className="text-teal-500" />}SUBCASTE</button>
+
+                <button className="flex items-center justify-center gap-1 md:text-sm text-xs font-semibold" name="ntdays" onClick={handleColumnHide}> {hideColumns.ntdays?<TbCircleCheck className="text-red-500"/>:<TbCircle className="text-teal-500" />}NT DAYS</button>
+
+                <button className="flex items-center justify-center gap-1 md:text-sm text-xs font-semibold" name="all" onClick={handleColumnHide}> {Object.values(hideColumns).every(value => value === true)?<TbCircleCheck className="text-red-500"/>:<TbCircle className="text-teal-500" />}ALL</button>
+
+                </div>}
             </div>
             {showAttendace ? <div>
-                {attendance.length > 0 ? <div className=" fixed top-52 h-[calc(100vh-13rem)]  overflow-auto  w-full  lg:px-12 mb-20" >
+                {attendance.length > 0 ? <div className=" fixed md:top-[13.5rem] top-72 h-[calc(100vh-13rem)]  overflow-auto  w-full  lg:px-12 mb-20" >
                     <div className="pb-16">
-                        <table className=" w-full overflow-auto text-sm text-left text-gray-500 " id="table_pdf" >
+                        <table className=" w-full overflow-auto md:text-sm text-xs text-left text-gray-500 " id="table_pdf" >
 
                             <thead className="sticky top-0 text-xs  w-screen text-gray-700 uppercase  bg-gray-50  ">
                                 <tr >
-                                    <th scope="col" className="py-3 px-2 text-center">
-                                        Sr.No
+                                    <th scope="col" className={`${hideColumns.srno && "hidden"} py-3 px-2 text-center`}>
+                                        SR.No
                                     </th>
-                                    <th scope="col" className="py-3 px-2 text-center">
+                                    <th scope="col" className={`${hideColumns.grno && "hidden"} py-3 px-2 text-center`}>
                                         GR.No
                                     </th>
-                                    <th scope="col" className="py-3 px-2 text-center">
+                                    <th scope="col" className={`${hideColumns.dob && "hidden"} py-3 px-2 text-center`}>
                                         DOB
                                     </th>
-                                    <th scope="col" className="py-3 px-2 text-center">
+                                    <th scope="col" className={`${hideColumns.caste && "hidden"} py-3 px-2 text-center`}>
                                         Caste
                                     </th>
-                                    <th scope="col" className="py-3 px-2 text-center">
+                                    <th scope="col" className={`${hideColumns.subcaste && "hidden"} py-3 px-2 text-center`}>
                                         Subcaste
                                     </th>
                                     <th scope="col" className="py-3 px-2 text-center">
@@ -158,7 +247,7 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
                                     <th scope="col" className="py-3 px-2 text-center">
                                         Absent days
                                     </th>
-                                    <th scope="col" className="py-3 px-2 text-center">
+                                    <th scope="col" className={`${hideColumns.ntdays && "hidden"} py-3 px-2 text-center`}>
                                         NT days
                                     </th>
 
@@ -209,19 +298,19 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
                                 {studentDetails.sort((d, e) => { return d.rollNumber - e.rollNumber }).map((item, index) => {
                                     return <tr key={index} className="bg-white border-border-collapse   ">
 
-                                        <td className="py-4 px-2 text-center">
+                                        <td className={`${hideColumns.srno && "hidden"} py-4 px-2 text-center`}>
                                             {index + 1}
                                         </td>
-                                        <td className="py-4 px-2 text-center">
+                                        <td className={`${hideColumns.grno && "hidden"} py-4 px-2 text-center`}>
                                             {item.genRegNumber}
                                         </td>
-                                        <td className="py-4 px-2 text-center">
+                                        <td className={`${hideColumns.dob && "hidden"} py-4 px-2 text-center`}>
                                             {new Date(item.DOB).toLocaleDateString('en-GB')}
                                         </td>
-                                        <td className="py-4 px-2 text-center">
+                                        <td className={`${hideColumns.caste && "hidden"} py-4 px-2 text-center`}>
                                             {item.caste}
                                         </td>
-                                        <td className="py-4 px-2 text-center">
+                                        <td className={`${hideColumns.subcaste && "hidden"} py-4 px-2 text-center`}>
                                             {item.subCaste}
                                         </td>
                                         <td className="py-4 px-2 text-center">
@@ -268,7 +357,7 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
                                                 attendance.filter(x => { return x.name === item._id }).filter(item => item.attendance === 'A').length
                                             }
                                         </td>
-                                        <td className="py-4 px-2 text-center">
+                                        <td className={`${hideColumns.ntdays && "hidden"} py-4 px-2 text-center`}>
                                             {
                                                 attendance.filter(x => { return x.name === item._id }).filter(item => item.attendance === 'NT').length
                                             }

@@ -26,30 +26,27 @@ return indianDateString
 }
 
   const handleClick=async(attendance,studentInfo)=>{
-
 //update status 
-let x=JSON.parse(localStorage.getItem("localData"))
-   const index = x.findIndex(item => item.name === studentInfo.name);
-  //  const index = array.findIndex((item) => item.id === action.id);
+let getStatus=JSON.parse(localStorage.getItem("localData"))
+   const index = getStatus.findIndex(item => item.name === studentInfo.name);
    if(index !== -1) {
-    x[index] = { ...x[index], status:"done" };
-    localStorage.setItem("localData",JSON.stringify(x))
+    getStatus[index] = { ...getStatus[index], status:"done" };
+    localStorage.setItem("localData",JSON.stringify(getStatus))
     setData([...JSON.parse(localStorage.getItem("localData"))])
   }
 
-
-
-
-    let reqData={name:studentInfo.name,email:studentInfo.email,attendance:attendance}
+// send mail 
+    let emailData={name:studentInfo.name,email:studentInfo.email,attendance:attendance}
     let res=await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/sendmail`, { 
       method: 'POST', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(reqData),
+      body: JSON.stringify(emailData),
     })
 
    let mailResponse=await res.json()
+
   if(mailResponse.success){
     
       toast.success('Email sent successfully!', {
@@ -71,15 +68,11 @@ let x=JSON.parse(localStorage.getItem("localData"))
       progress: undefined,
     });
   }
+// add attendance
 // as we are living in india so while adding the date we will add it in ISO format date:new Date().toISOString() 
-
-
-   const studentInformation = {_id:studentInfo._id,email:studentInfo.email,className:studentInfo.className,division:studentInfo.division,rollNumber:studentInfo.rollNumber,attendance:attendance,date:getIndianTime(),time:new Date().toLocaleTimeString(),
-  genRegNumber:studentInfo.genRegNumber,caste:studentInfo.caste,subCaste:studentInfo.subCaste,DOB:studentInfo.DOB,phone:studentInfo.phone
-  
-  };
+const studentInformation = {_id:studentInfo._id,email:studentInfo.email,className:studentInfo.className,division:studentInfo.division,rollNumber:studentInfo.rollNumber,attendance:attendance,date:getIndianTime(),time:new Date().toLocaleTimeString(),
+  genRegNumber:studentInfo.genRegNumber,caste:studentInfo.caste,subCaste:studentInfo.subCaste,DOB:studentInfo.DOB,phone:studentInfo.phone};
      
-
    const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/addattendance`, {
      method: 'POST', // or 'PUT'
      headers: {
@@ -88,6 +81,9 @@ let x=JSON.parse(localStorage.getItem("localData"))
      body: JSON.stringify(studentInformation),
    })
    const fresponse = await response.json()
+
+
+
 
   }
 
