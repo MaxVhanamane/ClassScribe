@@ -1,10 +1,9 @@
-import React, { useEffect,useRef } from "react";
-
-// import NoteContext from "./NoteContext"
+import React, { useEffect } from "react";
 import { createContext, useState } from "react";
 import { useRouter } from "next/router";
-import {toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 // creating context object and exporting it.
 export const AuthContext = createContext();
 
@@ -13,20 +12,18 @@ function AuthState(props) {
   const [token, setToken] = useState(null);
   const [role, setRole] = useState(null);
   const router = useRouter();
-  
-useEffect(()=>{
-  let tokenValue=localStorage.getItem("token")
-  let role=localStorage.getItem("role")
-  if(tokenValue && role){
-    setToken(tokenValue)
-    setRole(role)
-  }
-},[])
+
+  useEffect(() => {
+    let tokenValue = localStorage.getItem("token")
+    let role = localStorage.getItem("role")
+    if (tokenValue && role) {
+      setToken(tokenValue)
+      setRole(role)
+    }
+  }, [])
 
 
-
-  
-  const removeToken=()=>{
+  const removeToken = () => {
     localStorage.removeItem("token")
     localStorage.removeItem("role")
     setToken(null)
@@ -42,10 +39,10 @@ useEffect(()=>{
       progress: undefined,
     });
   }
- 
+
   return (
     <AuthContext.Provider
-      value={{ token,role,removeToken,setRole,setToken}}
+      value={{ token, role, removeToken, setRole, setToken }}
     >
       {/* Provider will give access to all the above states and functions to the components which are in props.children */}
       {props.children}

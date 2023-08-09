@@ -1,5 +1,3 @@
-
-
 import mongoose from 'mongoose'
 
 const MONGODB_URI = process.env.MONGO_URI
@@ -33,7 +31,7 @@ async function connectDb() {
       bufferCommands: false,
     }
 
-    cached.promise = await mongoose.connect(MONGODB_URI, {useNewUrlParser: true}).then((mongoose) => {
+    cached.promise = await mongoose.connect(MONGODB_URI, { useNewUrlParser: true }).then((mongoose) => {
       return mongoose
     })
   }

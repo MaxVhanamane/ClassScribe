@@ -1,7 +1,10 @@
 import connectDb from '../../middleware/mongoose';
 import User from '../../models/users';
+
 export default async function handler(req, res) {
+
     connectDb()
+
    if(req.method==="POST")
    {
     let teachers = await User.find({role:req.body.role})

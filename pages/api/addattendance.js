@@ -2,8 +2,11 @@ import connectDb from '../../middleware/mongoose';
 import AttendanceRecord from '../../models/attendancerecord';
 import Student from './../../models/students';
 const mongoose = require('mongoose');
+
 let isProcessing = false
+
 export default async function handler(req, res) {
+
     connectDb()
 
     if (req.method === "POST") {
@@ -33,7 +36,7 @@ export default async function handler(req, res) {
         //   })
         //    isProcessing = false;
         //   return res.send("hi")
-       
+
         // If you have taken attendance of 5 students and then you add new student that creates a problem to avoid that issue I'm checking allStudents.length==todaysAttendanceStarted.length. if (allStudents.length != todaysAttendanceStarted.length) then we will add those students in attendance. there is if statement below to handle this.
         if ((todaysAttendanceStarted.length != 0) && (allStudents.length == todaysAttendanceStarted.length)) {
             await AttendanceRecord.findOneAndUpdate({ name: mongoose.Types.ObjectId(req.body._id), "date": { "$gte": startDate, "$lt": endDate } },
@@ -58,21 +61,21 @@ export default async function handler(req, res) {
 
 
         if (todaysAttendanceStarted.length <= 0) {
-            let newArray = allStudents.map((data) => {
-                let obj = data.toObject();
-                obj.name = obj._id
-                delete obj._id;
-                delete obj.createdAt;
-                delete obj.updatedAt;
-                delete obj.__v;
-                obj.attendance = 'NT';
-                obj.date = req.body.date;
-                obj.time = req.body.time;
-                return obj
+            let updatedStudentArray  = allStudents.map((studentData) => {
+                let updatedStudentObj  = studentData.toObject();
+                updatedStudentObj.name = updatedStudentObj._id
+                delete updatedStudentObj._id;
+                delete updatedStudentObj.createdAt;
+                delete updatedStudentObj.updatedAt;
+                delete updatedStudentObj.__v;
+                updatedStudentObj.attendance = 'NT';
+                updatedStudentObj.date = req.body.date;
+                updatedStudentObj.time = req.body.time;
+                return updatedStudentObj
             })
             // Insert the documents
             try {
-                await AttendanceRecord.insertMany(newArray);
+                await AttendanceRecord.insertMany(updatedStudentArray );
                 // If todaysAttendanceStarted.length>0 it means we already added attendance=NT for other students. now we will just update that.
                 // Here I am not putting second operation in else statement because when first attendance starts, I will make all the students attendace of that particular class as NT then I will update the first students attendance. from second students attendance it doesn't go in if statement from there it will just update the old attendance that is set as NT.
                 await AttendanceRecord.findOneAndUpdate({ name: mongoose.Types.ObjectId(req.body._id), "date": { "$gte": startDate, "$lt": endDate } }, { attendance: req.body.attendance, date: req.body.date, time: req.body.time })
@@ -83,7 +86,6 @@ export default async function handler(req, res) {
                 isProcessing = false
                 return res.status(200).send({ success: false })
             }
-
 
         }
 
@@ -124,8 +126,6 @@ export default async function handler(req, res) {
             }
 
         }
-
-
 
     }
     else {

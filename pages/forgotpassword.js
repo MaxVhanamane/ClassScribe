@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router';
-import Link from "next/link"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { GiDeskLamp } from 'react-icons/gi';
+import Image from 'next/image';
+
+
 export default function Forgotpassword() {
   const router = useRouter()
   const [email, setEmail] = useState("")
   const [newPassword, setNewPassword] = useState("")
   const [cNewpassword, setCNewPassword] = useState("")
 
-
   useEffect(() => {
     const token = localStorage.getItem("token")
     if (token) {
       router.push("/")
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-
 
 
   const handleChange = (e) => {
@@ -35,20 +36,24 @@ export default function Forgotpassword() {
     }
   }
 
-
+  const isValidEmail=(email)=> {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  }
 
   const handleSendMail = async () => {
-    // basic email verification
-    const terms = ["@"]
-    const result = terms.every(term => email.includes(term))
-
-    if (result && email.length > 3) {
+   if(!email.length>0){
+    toast.warn("Kindly provide your email address.");
+    return
+   }
+   
+    if (isValidEmail(email)) {
 
 
       const data = { email, sendMail: true };
 
       const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/forgotpassword`, {
-        method: 'POST', // or 'PUT'
+        method: 'POST', 
         headers: {
           'Content-Type': 'application/json',
         },
@@ -58,43 +63,19 @@ export default function Forgotpassword() {
       const response = await res.json()
 
       if (response.success) {
-        toast.success("We have emailed you password reset link. Check your mail.", {
-
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.success("We have emailed you password reset link. Check your mail.");
+        setEmail("")
       }
 
       else {
-        toast.error("No user found! Please enter a valid mail id.", {
-
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.error("No user found! Please enter a valid mail id.");
 
       }
 
     }
 
     else {
-
-      toast.error("Enter a valid mail id", {
-
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error("Please enter a valid email address.");
     }
 
 
@@ -107,12 +88,10 @@ export default function Forgotpassword() {
     if (newPassword === cNewpassword) {
       if(newPassword.length>7 && cNewpassword.length>7){
 
-      
-
       const data = { email: router.query.email, sendMail: false, token: router.query.token, newPassword: newPassword };
 
       const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/forgotpassword`, {
-        method: 'POST', // or 'PUT'
+        method: 'POST', 
         headers: {
           'Content-Type': 'application/json',
         },
@@ -178,34 +157,35 @@ export default function Forgotpassword() {
 
   }
 
-
-
-
   return (
     <section className="h-screen">
       <div className=" py-12 px-6 h-full">
-        <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
-          <div className="w-full xl:w-6/12 md:w-3/4">
-            <div className="block bg-gradient-to-r from-teal-300 to-gray-50 border border-teal-600 shadow-md shadow-teal-500 rounded-lg">
-              <div className="flex justify-center items-center g-0">
-                <div className=" px-4 md:px-0">
-                  <div className="md:p-12 md:mx-6">
-                    <div className="flex items-center justify-center flex-col">
-                    <div className="  w-[3.20rem] h-[3.20rem] flex items-center justify-center text-white rounded-full font-bold mt-6 md:mt-auto shadow-xl shadow-white animate-changeBg "><p>AM</p></div>
-                      <h4 className=" text-lg md:text-xl font-bold  mb-4 mt-2 pb-1 text-gray-700">Forgot Password</h4>
+        <div className="flex justify-center items-center flex-wrap h-full  text-gray-800">
+          <div className="w-full  lg:w-1/2 sm:w-[70%] md:w-[90%]">
+            <div className="   shadow-md shadow-gray-400 rounded-lg p-4">
+              <div className="flex justify-center items-center md:justify-around flex-col md:flex-row ">
+              <div className="  overflow-hidden ">
+              <div className='lg:w-80 lg:h-80 w-64 h-44 md:w-72 md:h-72 relative'>
+                <Image src={ router.query.token ?"/happy.svg" :"/forgot_password.svg"} layout="fill" objectFit="contain" />
+                </div>
+              </div>
+                  <div className=" 
+                   w-64  md:w-72 lg:px-8 flex items-center justify-center flex-col">
+                    <div className="flex items-center justify-center flex-col ">
+                    <div className="w-[3.25rem] bg-teal-500 h-[3.25rem] hidden md:flex items-center justify-center text-white rounded-full font-bold mt-6 md:mt-auto shadow-lg shadow-gray-50  "><GiDeskLamp className='text-3xl'/></div>
+                      <h4 className=" text-lg md:text-xl font-semibold  mb-4 mt-2 pb-1 text-gray-700">{router.query.token ?"Change Password":"Forgot Password"}</h4>
 
                     </div>
                     {/* If user has a token in his url it means he is visiting this page using the link that we sent him in a mail.
                     So we will show him password reset page. If he does not have a token in his url then will let him generate 
                     password reset link. */}
-                    {router.query.token && <div>
-
+                    {router.query.token && <div className='w-64  md:w-72 lg:px-8'>
 
                       <div className="mb-4">
                         <input
                           onChange={handleChange}
                           type="password"
-                          className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-600 focus:outline-none"
+                          className=" block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-600 focus:outline-none"
                           id="password"
                           placeholder="New password"
                           name="password"
@@ -217,7 +197,7 @@ export default function Forgotpassword() {
                         <input
                           onChange={handleChange}
                           type="password"
-                          className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-600 focus:outline-none"
+                          className=" block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-600 focus:outline-none"
                           id="cpassword"
                           placeholder="Confirm new password"
                           name="cpassword"
@@ -226,56 +206,61 @@ export default function Forgotpassword() {
                         />
                       </div>
 
-                      <div className="text-center pt-1 mb-12 pb-1">
+                      <div className="text-center pt-1 mb-4 md:mb-0 pb-1">
                         <button
                           onClick={handleResetPassword}
 
-                          className="  inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight  rounded shadow-md   active:shadow-lg  w-full mb-3 bg-teal-500 hover:bg-teal-600 ease-linear transition-all duration-150"
-
-                          data-mdb-ripple="true"
-                          data-mdb-ripple-color="light"
-                          type="submit"
+                          className="  inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight  rounded shadow-md   active:shadow-lg  w-full mb-2 bg-teal-500 hover:bg-teal-600 ease-linear transition-all duration-150"
+                          type="button"
 
                         >
                           Change Password
                         </button>
+                        <button
+                          onClick={() => router.push('/login')}
+                          className="  inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight  rounded shadow-md   active:shadow-lg transition duration-150 ease-in-out w-full  bg-gray-600 hover:bg-gray-700 "
+                          type="button"
+
+                        >
+                          Back to Login page
+                        </button>
                       </div>
                     </div>}
 
-
-
                     {!router.query.token && <div>
-                      {/* <p className="mb-4">Please login to your account</p> */}
                       <div className="mb-4">
                         <input
                           onChange={handleChange}
                           type="email"
-                          className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-600 focus:outline-none"
+                          className="block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-600 focus:outline-none"
                           id="email"
                           placeholder="Email"
                           name="email"
-                          value={email}
-
-                        />
+                          value={email} />
+                          
                       </div>
 
-                      <div className="text-center pt-1 mb-8 pb-1">
+                      <div className="text-center pt-1 mb-4 md:mb-0 ">
                         <button
                           onClick={handleSendMail}
                           className="  inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight  rounded shadow-md   active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-teal-500 hover:bg-teal-600 "
-
-                          data-mdb-ripple="true"
-                          data-mdb-ripple-color="light"
-                          type="submit"
+                          type="button"
 
                         >
                           Send Password Reset Link
+                        </button>
+                        <button
+                          onClick={() => router.push('/login')}
+                          className="  inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight  rounded shadow-md   active:shadow-lg transition duration-150 ease-in-out w-full bg-gray-600 hover:bg-gray-700 "
+                          type="button"
+
+                        >
+                          Back to Login page
                         </button>
                       </div>
                   
                     </div>}
                   </div>
-                </div>
 
               </div>
             </div>

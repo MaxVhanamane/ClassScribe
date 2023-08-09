@@ -5,16 +5,19 @@ import connectDb from './../middleware/mongoose';
 import { toast } from 'react-toastify';
 import {BiRadioCircleMarked} from "react-icons/bi"
 import {HiCheckCircle} from "react-icons/hi"
-export default function TakeAttendance({allStudents,className}) {
-const [incomingData,setIncomingData]=useState(allStudents)
-const newD=incomingData.map((d)=>{
-  d.status="pending"
-  return d
+
+export default function TakeAttendance({studentList,className}) {
+
+
+const studentInformation=studentList.map((student)=>{
+  student.status="pending"
+  return student
 })
-const [data,setData]=useState(newD)
+
+const [data,setData]=useState(studentInformation)
 
 useEffect(()=>{
-  localStorage.setItem("localData",JSON.stringify(newD))
+  localStorage.setItem("localData",JSON.stringify(studentInformation))
 },[])
 
 const getIndianTime=()=>{
@@ -157,40 +160,8 @@ const studentInformation = {_id:studentInfo._id,email:studentInfo.email,classNam
     </div>
 </div>:<div className="fixed top-36 flex justify-center items-center font-semibold my-20 p-10 text-red-500">No Student records found! Please add Students. </div>}
 
-
-
-
-
-
-
-{/* 
-        <div className="flex border-2 border-blue-500 shadow w-3/4 p-4 mt-4 items-center justify-center flex-col">
-       
-        {data.length>0? data.map((item,index)=>{
-          return<div className='flex gap-4 border-2 py-2 items-center justify-center my-4 w-fit px-6 ' key={index}>
-             <p >{item.rollNumber}</p>
-
-             <p >{item.name}</p>
-             <p >{item.email}</p>
-             <button onClick={(e)=>{handleClick(e.target.value,item)} }className="bg-green-700 text-white rounded p-1 px-2" value="present" >Present</button>
-             <button onClick={(e)=>{handleClick(e.target.value,item)} } className="bg-red-500 text-white rounded p-1 px-2" value="absent">Absent</button>
-             </div> 
-        }):<div className="flex justify-center items-center shadow-sm my-20 p-10 text-red-500">No Student data found! Please add Students. </div>}
-</div> */}
       </main>
 
-      {/* <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer> */}
     </div>
   )
 }
@@ -204,8 +175,7 @@ export async function getServerSideProps(context) {
     let className = (context.query.className);
     let division = (context.query.division);
 
-    let students = await Student.find({className:className,division:division})
- 
-    return { props: { allStudents:JSON.parse(JSON.stringify(students)),className:className } }
+    let studentList = await Student.find({className:className,division:division})
+    return { props: { studentList:JSON.parse(JSON.stringify(studentList)),className:className } }
   }
   

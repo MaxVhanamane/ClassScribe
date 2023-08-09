@@ -6,6 +6,7 @@ import { AES } from 'crypto-js';
 import User from '../../models/users';
 
 export default async function handler(req, res) {
+
     connectDb()
     // check if the user exists in the database. If user does not exists then we don't have to reset the password.
     let verifyUser = await User.findOne({ email: req.body.email })

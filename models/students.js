@@ -7,10 +7,10 @@ const StudentSchema = new mongoose.Schema({
     className: { type: String, required: true },
     division: { type: String, required: true },
     rollNumber: { type: Number, required: true },
-    genRegNumber:{type:Number,required:true},
-    DOB:{type:Date,required:true},
-    caste:{type:String,required:true},
-    subCaste:{type:String,required:true}
+    genRegNumber: { type: Number, required: true },
+    DOB: { type: Date, required: true },
+    caste: { type: String, required: true },
+    subCaste: { type: String, required: true }
 }, { timestamps: true });
-const Student=mongoose.models.Student || mongoose.model("Student", StudentSchema)
+const Student = mongoose.models.Student || mongoose.model("Student", StudentSchema)
 export default Student
