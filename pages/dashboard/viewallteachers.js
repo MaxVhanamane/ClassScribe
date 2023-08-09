@@ -187,8 +187,8 @@ export default function ViewAllTeachers({ allTeachers }) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <DashboardSidebar />
-        <div className="lg:ml-60 sticky top-0 z-50">
-          <div className="  p-2 font-bold md:text-3xl text-2xl  mx-auto text-center shadow  text-gray-50 bg-teal-500 drop-shadow  "><h1 className="text-center mx-auto">Teacher list </h1></div></div>
+        <div className="lg:ml-60 sticky top-0  z-10">
+        <div className="  p-2 font-semibold md:text-3xl text-2xl  mx-auto text-center shadow  text-gray-50 bg-teal-500 drop-shadow  "><h1 className="text-center mx-auto">Teacher list</h1></div></div>
         <main className=' flex items-center justify-center flex-col lg:ml-60 '>
 
 
@@ -228,13 +228,14 @@ export default function ViewAllTeachers({ allTeachers }) {
 
 
           </div>
+          <p onClick={handleViewAll} className="md:hidden text-right pr-2 text-blue-700 mt-4 hover:text-blue-600"  >
+              View All teachers
+            </p>
 
           {allTeachersInfo.length > 0 ? <div className="overflow-x-auto relative  w-full p-1 lg:p-4">
 
-            <p onClick={handleViewAll} className="md:hidden text-right pr-2 text-blue-700 mt-2 hover:text-blue-600"  >
-              View All teachers
-            </p>
-            <table className="w-full text-sm text-left text-gray-500  mt-4">
+           
+            <table className="w-full text-sm text-left text-gray-500  mt-2 md:mt-4">
               <thead className="text-xs text-gray-700 uppercase border-b border-r-0 border-collapse bg-gray-50 ">
                 <tr >
                   <th scope="col" className="py-3 px-2 md:px-2  text-center ">

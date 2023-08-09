@@ -97,7 +97,7 @@ export default function Login() {
             <div className=" w-full flex items-center justify-center flex-col md:flex-row  mx-6   shadow-md shadow-gray-400 rounded-lg px-2 ">
               <div className="  overflow-hidden ">
               <div className='lg:w-80 lg:h-80 w-64 h-64 md:w-72 md:h-72 relative'>
-                <Image src={"/school.svg"} layout="fill" objectFit="contain" />
+                <Image priority={true} src={"/school.svg"} layout="fill" objectFit="contain" alt='Illustration of students going to school' />
                 </div>
               </div>
               <div className=" md:w-80 w-64">

@@ -17,6 +17,7 @@ const studentInformation=studentList.map((student)=>{
 const [data,setData]=useState(studentInformation)
 
 useEffect(()=>{
+   // eslint-disable-next-line react-hooks/exhaustive-deps
   localStorage.setItem("localData",JSON.stringify(studentInformation))
 },[])
 

@@ -166,7 +166,7 @@ export default function Forgotpassword() {
               <div className="flex justify-center items-center md:justify-around flex-col md:flex-row ">
               <div className="  overflow-hidden ">
               <div className='lg:w-80 lg:h-80 w-64 h-44 md:w-72 md:h-72 relative'>
-                <Image src={ router.query.token ?"/happy.svg" :"/forgot_password.svg"} layout="fill" objectFit="contain" />
+                <Image priority={true} src={ router.query.token ?"/happy.svg" :"/forgot_password.svg"} layout="fill" objectFit="contain" alt={router.query.token ?"Illustration of a happy face" :"Illustration of a person recovering password"} />
                 </div>
               </div>
                   <div className=" 

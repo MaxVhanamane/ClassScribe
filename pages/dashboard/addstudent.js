@@ -138,10 +138,12 @@ export default function AddStudent() {
        footer{
         display:none;
        }
-       #nav{
+       nav{
         display:none;
        }
       `}</style>
+
+      
       <Head>
         <title>Dashboard - Add Students</title>
         <meta name="description" content="Add a food item" />
@@ -149,7 +151,7 @@ export default function AddStudent() {
       <DashboardSidebar />
 
       <div className="lg:ml-60 sticky top-0  z-10">
-        <div className="  p-2 font-bold md:text-3xl text-2xl  mx-auto text-center shadow  text-gray-50 bg-teal-500 drop-shadow mb-8 "><h1 className="text-center mx-auto">Add a student</h1></div></div>
+        <div className="  p-2 font-semibold md:text-3xl text-2xl  mx-auto text-center shadow  text-gray-50 bg-teal-500 drop-shadow mb-8 "><h1 className="text-center mx-auto">Add a student</h1></div></div>
       <div className='lg:ml-28 p-6  pt-6 flex justify-center w-full'>
 
         <div className="block p-6 rounded-lg shadow-lg bg-white w-[50rem]  mb-28">

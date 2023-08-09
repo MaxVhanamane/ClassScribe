@@ -244,7 +244,7 @@ export default function ViewAllStudents({ allStudents }) {
       </Head>
       <DashboardSidebar />
       <div className="lg:ml-60 sticky top-0  z-10">
-        <div className="  p-2 font-bold md:text-3xl text-2xl  mx-auto text-center shadow  text-gray-50 bg-teal-500 drop-shadow  "><h1 className="text-center mx-auto">Student list</h1></div></div>
+        <div className="  p-2 font-semibold md:text-3xl text-2xl  mx-auto text-center shadow  text-gray-50 bg-teal-500 drop-shadow  "><h1 className="text-center mx-auto">Student list</h1></div></div>
       <main className=' flex items-center justify-center flex-col lg:ml-60 '>
         <div className='flex flex-row gap-2 items-center justify-center px-1'>
 

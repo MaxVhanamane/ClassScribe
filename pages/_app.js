@@ -21,7 +21,8 @@ function MyApp({ Component, pageProps }) {
   />
   <AuthState>
     <Layout>
-   <Navbar/> <Component {...pageProps} />
+   <Navbar/> 
+   <Component {...pageProps} />
    </Layout>
    </AuthState>
    </>

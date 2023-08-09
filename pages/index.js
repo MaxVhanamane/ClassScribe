@@ -8,7 +8,6 @@ import { AuthContext } from "../context/AuthState";
 export default function Home({ allStudents }) {
 
     const {token} =useContext(AuthContext)
-    console.log(token)
   if(!token){
     return null
   }

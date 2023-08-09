@@ -82,7 +82,6 @@ export default async function handler(req, res) {
                 isProcessing = false
                 return res.status(200).send({ success: true })
             } catch (error) {
-                console.log(error)
                 isProcessing = false
                 return res.status(200).send({ success: false })
             }
@@ -120,7 +119,6 @@ export default async function handler(req, res) {
                 isProcessing = false
                 return res.status(200).send({ success: true })
             } catch (error) {
-                console.log(error)
                 isProcessing = false
                 return res.status(200).send({ success: false })
             }
