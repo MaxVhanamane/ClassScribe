@@ -56,8 +56,8 @@ export default function DashboardSidebar() {
                   <RiCloseCircleFill />
                </div>
 
-                  <div className="flex text-lg  transition duration-500  items-center justify-center gap-1 py-0.5 px-2 font-semibold antialiased text-gray-50 border border-teal-400 rounded-lg bg-teal-600 cursor-pointer my-2 lg:my-auto">
-                     <GiDeskLamp className="text-xl text-gray-50 "/><span className="h-8">Attendance Master</span> </div>
+               <div className="flex text-lg  transition duration-500  items-center justify-center gap-1 py-0.5 px-2 font-semibold antialiased text-gray-50 border border-teal-400 rounded-lg  cursor-pointer my-2 lg:my-auto">
+                  <GiDeskLamp className="text-xl text-teal-500 " /><span className="h-8 text-teal-500">Class<span className='text-teal-400'>Scribe</span></span> </div>
                <ul className="space-y-2 mt-8">
 
                   <Link href="/dashboard/addstudent">

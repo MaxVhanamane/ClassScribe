@@ -20,7 +20,7 @@ export default async function handler(req, res) {
                 if (user.email === req.body.email && decryptedPass === req.body.password) {
                     const jwtToken = jwt.sign({
                         name: user.name, email: user.email
-                    }, process.env.JWT_SECRET, { expiresIn: '2d' });
+                    }, process.env.JWT_SECRET, { expiresIn: '7d' });
                     res.status(200).json({ success: true, jwtToken, email: user.email, role: user.role })
                 }
                 else {

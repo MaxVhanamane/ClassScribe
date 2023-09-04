@@ -3,8 +3,9 @@ import { useRouter } from "next/router"
 import { AuthContext } from './../context/AuthState';
 
 export default function Layout({ children }) {
+
   const router = useRouter()
-  const { removeToken} = useContext(AuthContext);
+  const { removeToken, setLoading } = useContext(AuthContext);
 
   useEffect(() => {
 
@@ -13,23 +14,17 @@ export default function Layout({ children }) {
     if (!token && !role && router.pathname != "/login" && router.pathname != "/forgotpassword") {
       router.push("/login")
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.query])
-
-
-  useEffect(() => {
-
-    let token = localStorage.getItem("token");
 
     async function verify() {
-
+      setLoading(true)
       const serverResponse = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/verifyauthexptime`, {
-        method: 'POST', // or 'PUT'
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         }
       })
+
 
       const response = await serverResponse.json()
 
@@ -38,6 +33,9 @@ export default function Layout({ children }) {
         router.push("/login")
         alert("Token expired : \n please login again to refresh your token.")
       }
+
+      setLoading(false)
+
     }
 
     if (token) {

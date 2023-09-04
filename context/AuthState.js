@@ -9,13 +9,16 @@ export const AuthContext = createContext();
 
 function AuthState(props) {
 
+
   const [token, setToken] = useState(null);
   const [role, setRole] = useState(null);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
     let tokenValue = localStorage.getItem("token")
     let role = localStorage.getItem("role")
+
     if (tokenValue && role) {
       setToken(tokenValue)
       setRole(role)
@@ -42,7 +45,7 @@ function AuthState(props) {
 
   return (
     <AuthContext.Provider
-      value={{ token, role, removeToken, setRole, setToken }}
+      value={{ token, role, removeToken, setRole, setToken, loading, setLoading }}
     >
       {/* Provider will give access to all the above states and functions to the components which are in props.children */}
       {props.children}

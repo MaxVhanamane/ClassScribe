@@ -16,7 +16,7 @@ export default async function handler(req, res) {
             //When you run the while loop without any delay or wait time, the loop will execute as quickly as possible, repeatedly checking whether the lock has been released. This can be very resource-intensive and can cause the server to become unresponsive or slow down.
 
             // By adding the await new Promise(resolve => setTimeout(resolve, 1000)) line, you're introducing a delay of 1 second between each iteration of the loop. This reduces the number of times the loop checks the lock, which in turn reduces the server's resource usage and improves performance.
-            await new Promise(resolve => setTimeout(resolve, 700));
+            await new Promise(resolve => setTimeout(resolve, 1000));
         }
         // Set the lock
         isProcessing = true;
@@ -61,8 +61,8 @@ export default async function handler(req, res) {
 
 
         if (todaysAttendanceStarted.length <= 0) {
-            let updatedStudentArray  = allStudents.map((studentData) => {
-                let updatedStudentObj  = studentData.toObject();
+            let updatedStudentArray = allStudents.map((studentData) => {
+                let updatedStudentObj = studentData.toObject();
                 updatedStudentObj.name = updatedStudentObj._id
                 delete updatedStudentObj._id;
                 delete updatedStudentObj.createdAt;
@@ -75,7 +75,7 @@ export default async function handler(req, res) {
             })
             // Insert the documents
             try {
-                await AttendanceRecord.insertMany(updatedStudentArray );
+                await AttendanceRecord.insertMany(updatedStudentArray);
                 // If todaysAttendanceStarted.length>0 it means we already added attendance=NT for other students. now we will just update that.
                 // Here I am not putting second operation in else statement because when first attendance starts, I will make all the students attendace of that particular class as NT then I will update the first students attendance. from second students attendance it doesn't go in if statement from there it will just update the old attendance that is set as NT.
                 await AttendanceRecord.findOneAndUpdate({ name: mongoose.Types.ObjectId(req.body._id), "date": { "$gte": startDate, "$lt": endDate } }, { attendance: req.body.attendance, date: req.body.date, time: req.body.time })

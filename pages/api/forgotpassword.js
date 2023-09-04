@@ -38,7 +38,7 @@ export default async function handler(req, res) {
 
             let email = `
 
-    We have sent you this email in response to your request to reset your password on Attendance Master . 
+    We have sent you this email in response to your request to reset your password on ClassScribe . 
     To reset your password, please follow the link:
 
     <a href=${process.env.NEXT_PUBLIC_HOST}/forgotpassword?token=${randomToken}&email=${req.body.email}>Click here to reset your password</a>
@@ -66,7 +66,7 @@ export default async function handler(req, res) {
             let info = await transporter.sendMail({
                 from: process.env.EMAIL_ADDRESS, // sender address
                 to: req.body.email, // list of receivers
-                subject: "Password reset link for your account on Attendance Master", // Subject line
+                subject: "Password reset link for your account on ClassScribe", // Subject line
                 html: email, // html body
             });
             res.status(200).json({ success: true })
