@@ -186,7 +186,7 @@ export default function ViewAllStudents({ allStudents }) {
       body: JSON.stringify(studentInfo),
     })
     const response = await res.json()
-    
+
     if (response.success) {
       toast.success('Student details updated successfully!');
       // making optimistic updates. I can make a new request to get updated data but here I prefer doing optimistic updates.
@@ -243,8 +243,8 @@ export default function ViewAllStudents({ allStudents }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <DashboardSidebar />
-      <div className="lg:ml-60 sticky top-0  z-10">
-        <div className="  p-2 font-semibold md:text-3xl text-2xl  mx-auto text-center shadow  text-gray-50 bg-teal-500 drop-shadow  "><h1 className="text-center mx-auto">Student list</h1></div></div>
+      {!openStudentDetailsEditModal && <div className="lg:ml-60 sticky top-0  z-10">
+        <div className="  p-2 font-semiboldmd:text-lg text-lg  mx-auto text-center shadow  text-gray-50 bg-gradient-to-tr from-teal-500 to-teal-200 "><h1 className="text-center mx-auto">List of students</h1></div></div>}
       <main className=' flex items-center justify-center flex-col lg:ml-60 '>
         <div className='flex flex-row gap-2 items-center justify-center px-1'>
 
@@ -425,17 +425,15 @@ export default function ViewAllStudents({ allStudents }) {
         </div> : <div className="flex justify-center items-center font-bold my-12 p-10 text-teal-500">{checkStudents ? <p className="text-red-500">No student records found! Please add students</p> : <p>Please select classname and division</p>} </div>}
 
         {openStudentDetailsEditModal && (
-          <div className="bg-gray-50 h-screen fixed inset-0 flex items-center justify-center overflow-scroll">
-            <div className="bg-teal-500  rounded-lg mb-10 mt-[45rem] md:mt-[25rem] lg:mt-[40rem] lg:ml-60 ">
-              {/* heading */}
+          <div className="bg-gray-50 h-screen fixed inset-0 flex items-start justify-center overflow-y-auto z-50 lg:z-auto ">
+            <div className="bg-teal-500  rounded-lg mb-10  lg:ml-60 mt-4  ">
               <div className="text-center font-bold text-xl mt-4 border-b border-solid border-slate-200">
                 <h2 className="mb-2 text-gray-100">Edit the student details</h2>
               </div>
-              {/* body */}
               <div>
                 <div className='p-6  pt-6 flex justify-center w-full'>
-                  <div className="block p-6 rounded-lg shadow-lg bg-white lg:w-[50rem] w-80 md:w-[40rem]  mb-12">
-                    <div className="form-group mb-6">
+                  <div className="block p-6 rounded-lg shadow-lg bg-white lg:w-[50rem] w-80 md:w-[40rem]  mb-1">
+                    <div className=" mb-6">
                       <label htmlFor="name" className="formLabel inline-block mb-2 text-gray-700">Name</label>
                       <input onChange={handleChange} value={studentDetails.name} name="name" type="text" className="form-control
     block
@@ -454,7 +452,7 @@ export default function ViewAllStudents({ allStudents }) {
     focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="name"
                         placeholder="Enter a name" />
                     </div>
-                    <div className="form-group mb-6">
+                    <div className=" mb-6">
                       <label htmlFor="email" className="formLabel inline-block mb-2 text-gray-700">Email</label>
                       <input onChange={handleChange} value={studentDetails.email} name="email" type="email" className="form-control
     block
@@ -474,7 +472,7 @@ export default function ViewAllStudents({ allStudents }) {
                         placeholder="Enter a parent's mail id" />
                     </div>
 
-                    <div className="form-group mb-6">
+                    <div className=" mb-6">
                       <label htmlFor="phone" className="formLabel inline-block mb-2 text-gray-700">Phone</label>
                       <input onChange={handleChange} value={studentDetails.phone} name="phone" type="number" className="form-control
     block
@@ -495,7 +493,7 @@ export default function ViewAllStudents({ allStudents }) {
                     </div>
 
 
-                    <div className="form-group mb-6">
+                    <div className=" mb-6">
                       <label htmlFor="classname" className="formLabel inline-block mb-2 text-gray-700">Class Name</label>
                       <input onChange={handleChange} value={studentDetails.className} name="className" type="number" className="form-control
     block
@@ -516,7 +514,7 @@ export default function ViewAllStudents({ allStudents }) {
                     </div>
 
 
-                    <div className="form-group mb-6">
+                    <div className=" mb-6">
                       <label htmlFor="division" className="formLabel inline-block mb-2 text-gray-700">Division</label>
                       <input onChange={handleChange} value={studentDetails.division} name="division" type="text" className="form-control
     block
@@ -537,7 +535,7 @@ export default function ViewAllStudents({ allStudents }) {
                     </div>
 
 
-                    <div className="form-group mb-6">
+                    <div className=" mb-6">
                       <label htmlFor="rollnumber" className="formLabel inline-block mb-2 text-gray-700">Roll Number</label>
                       <input onChange={handleChange} value={studentDetails.rollNumber} name="rollNumber" type="number" className="form-control
     block
@@ -559,7 +557,7 @@ export default function ViewAllStudents({ allStudents }) {
 
 
 
-                    <div className="form-group mb-6">
+                    <div className=" mb-6">
                       <label htmlFor="genRegNumber" className="formLabel inline-block mb-2 text-gray-700">General register number</label>
                       <input onChange={handleChange} value={studentDetails.genRegNumber} name="genRegNumber" type="number" className="form-control
     block
@@ -580,7 +578,7 @@ export default function ViewAllStudents({ allStudents }) {
                     </div>
 
 
-                    <div className="form-group mb-6">
+                    <div className=" mb-6">
                       <label htmlFor="DOB" className="formLabel inline-block mb-2 text-gray-700">Date of birth</label>
                       <input onChange={handleChange} value={studentDetails.DOB} name="DOB" type="date" className="form-control
     block
@@ -601,7 +599,7 @@ export default function ViewAllStudents({ allStudents }) {
                     </div>
 
 
-                    <div className="form-group mb-6">
+                    <div className=" mb-6">
                       <label htmlFor="caste" className="formLabel inline-block mb-2 text-gray-700">Caste</label>
                       <input onChange={handleChange} value={studentDetails.caste} name="caste" type="text" className="form-control
     block
@@ -622,7 +620,7 @@ export default function ViewAllStudents({ allStudents }) {
                     </div>
 
 
-                    <div className="form-group mb-6">
+                    <div className=" mb-6">
                       <label htmlFor="subCaste" className="formLabel inline-block mb-2 text-gray-700">Subcast</label>
                       <input onChange={handleChange} value={studentDetails.subCaste} name="subCaste" type="text" className="form-control
     block
@@ -644,17 +642,16 @@ export default function ViewAllStudents({ allStudents }) {
                   </div>
                 </div>
               </div>
-              {/* footer */}
-              <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+              <div className="flex items-center justify-end p-4 border-t border-solid border-slate-200 rounded-b">
                 <button
-                  className="bg-red-500 text-white hover:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  className="bg-red-500 text-white hover:bg-red-600 font-bold uppercase text-sm px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                   type="button"
                   onClick={() => setOpenStudentDetailsEditModal(false)}
                 >
                   Close
                 </button>
                 <button
-                  className="bg-blue-500 text-white hover:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  className="bg-blue-500 text-white hover:bg-blue-600 font-bold uppercase text-sm px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                   type="button"
                   onClick={() => {
                     handleEditStudentDetails()

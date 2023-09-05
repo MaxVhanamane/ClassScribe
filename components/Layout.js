@@ -34,7 +34,13 @@ export default function Layout({ children }) {
         alert("Token expired : \n please login again to refresh your token.")
       }
 
-      setLoading(false)
+      setTimeout(() => {
+        setLoading(false)
+        // To avoid flicker, we will keep the loading state true if we are not on the home screen.
+        if (router.pathname != "/") {
+          setLoading(true)
+        }
+      }, 500);
 
     }
 

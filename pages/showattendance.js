@@ -99,7 +99,7 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
 
     let uniqueDates = [...new Set(dates.sort())];
 
-    // using the student list (i.e studentDetails) to map over the attendance and get the attendance of an individual student.
+    // using the students list (i.e studentDetails) to map over the attendance and get the attendance of an individual student.
     //later we will use studentAttendance to display it accordingly
     // first sort the students using roll number then sort their attendance using the date. then we can directly use it.
     // The array structure will consist of sub-arrays, where each sub-array represents the attendance of a specific student (which looks like this  [["P","A","P"],["A","P","P"],....] ). 
@@ -254,11 +254,14 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
                                     <th scope="col" className={`${hideColumns.ntdays && "hidden"} py-3 px-2 text-center`}>
                                         NT days
                                     </th>
+                                    <th scope="col" className={` py-3 px-2 text-center`}>
+                                        Total
+                                    </th>
 
                                 </tr>
                             </thead>
                             <tbody className="font-semibold ">
-                                
+
                                 {studentDetails.sort((d, e) => { return d.rollNumber - e.rollNumber }).map((item, index) => {
                                     return <tr key={index} className="bg-white border-border-collapse   ">
 
@@ -324,6 +327,11 @@ export default function Attendancerecord({ allStudents, classNameValue }) {
                                         <td className={`${hideColumns.ntdays && "hidden"} py-4 px-2 text-center`}>
                                             {
                                                 attendance.filter(x => { return x.name === item._id }).filter(item => item.attendance === 'NT').length
+                                            }
+                                        </td>
+                                        <td className={` py-4 px-2 text-center`}>
+                                            {
+                                                attendance.filter(x => { return x.name === item._id }).length
                                             }
                                         </td>
 

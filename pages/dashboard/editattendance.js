@@ -37,7 +37,7 @@ export default function EditAttendace({ allStudents }) {
     else {
       setCheckStudents(true)
     }
-    
+
     setData(foundStudents)
     setselectDivisionName("default")
     setSelectClass("default")
@@ -61,7 +61,7 @@ export default function EditAttendace({ allStudents }) {
       </Head>
       <DashboardSidebar />
       <div className="lg:ml-60 sticky top-0  z-10">
-        <div className="  p-2 font-semibold md:text-3xl text-2xl  mx-auto text-center shadow  text-gray-50 bg-teal-500 drop-shadow  "><h1 className="text-center mx-auto">Edit attendance</h1></div></div>
+        <div className="  p-2 font-semibold md:text-lg text-lg mx-auto text-center shadow  text-gray-50 bg-gradient-to-tr from-teal-500 to-teal-200   "><h1 className="text-center mx-auto">Edit attendance</h1></div></div>
       <main className=' flex items-center justify-center flex-col lg:ml-60 '>
         <div className='flex flex-row gap-2 items-center justify-center px-1'>
           <div className='mt-6'>
@@ -195,7 +195,7 @@ export default function EditAttendace({ allStudents }) {
 
                   <td className="py-4 px-2 md:px-2 text-center">
                     <div className="flex space-x-2 items-center justify-center">
-                      <Link href={`/dashboard/viewattendance?_id=${item._id}&className=${item.className}&division=${item.division}&name=${item.name}`}><button className="bg-teal-500 hover:bg-teal-600 text-white rounded py-0.5 px-1  md:px-2 md:py-1 ease-linear transition-all duration-150" >View Attendance</button></Link>
+                      <Link href={`/dashboard/viewattendance?_id=${item._id}&className=${item.className}&division=${item.division}&name=${item.name}`}><button className="bg-teal-500 hover:bg-teal-600 text-white rounded py-0.5 px-1  md:px-2 md:py-1 ease-linear transition-all duration-150" >View <span className='hidden lg:inline-block'>Attendance</span></button></Link>
                     </div>
                   </td>
 

@@ -104,7 +104,7 @@ const Viewattendance = () => {
       <DashboardSidebar />
 
       <div className="lg:ml-60 sticky top-0  z-10">
-        <div className="  p-2 font-bold md:text-3xl text-2xl  mx-auto text-center shadow  text-gray-50 bg-teal-500 drop-shadow mb-8 "><h1 className="text-center mx-auto">Attendance</h1></div></div>
+        <div className="  p-2 font-bold md:text-lg text-lg  mx-auto text-center shadow  text-gray-50 bg-gradient-to-tr from-teal-500 to-teal-200  mb-8 "><h1 className="text-center mx-auto">Attendance</h1></div></div>
       <div className="flex items-center justify-center">
         <div className="lg:ml-60 flex gap-1">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
@@ -135,7 +135,7 @@ const Viewattendance = () => {
       </div>
 
 
-      <div className='lg:ml-64 p-6  pt-6 flex justify-center md:justify-start items-center w-full gap-4 flex-wrap mx-auto'>
+      <div className='lg:ml-64  p-6  pt-6 flex justify-center  items-center  gap-4 flex-wrap mx-auto'>
         {studentAttendance.map((i, index) => {
           return <form key={i._id} onSubmit={(event) => handleSubmit(event, i._id)} className="shadow-md p-2 lg:p-4 bg-gray-200">
             <div>

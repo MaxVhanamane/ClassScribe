@@ -99,7 +99,7 @@ export default function ViewAllTeachers({ allTeachers }) {
     const data = { _id: teacherDetails._id, name: teacherDetails.name, email: teacherDetails.email, role: teacherDetails.role, phone: teacherDetails.phone, address: teacherDetails.address };
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/editteacherdetails`, {
-      method: 'POST', 
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -187,8 +187,8 @@ export default function ViewAllTeachers({ allTeachers }) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <DashboardSidebar />
-        <div className="lg:ml-60 sticky top-0  z-10">
-        <div className="  p-2 font-semibold md:text-3xl text-2xl  mx-auto text-center shadow  text-gray-50 bg-teal-500 drop-shadow  "><h1 className="text-center mx-auto">Teacher list</h1></div></div>
+        {!openTeacherDetailsEditModal && <div className="lg:ml-60 sticky top-0  z-10">
+          <div className="  p-2 font-semibold md:text-lg text-lg  mx-auto text-center shadow  text-gray-50 bg-gradient-to-tr from-teal-500 to-teal-200   "><h1 className="text-center mx-auto">List of Teachers</h1></div></div>}
         <main className=' flex items-center justify-center flex-col lg:ml-60 '>
 
 
@@ -229,12 +229,12 @@ export default function ViewAllTeachers({ allTeachers }) {
 
           </div>
           <p onClick={handleViewAll} className="md:hidden text-right pr-2 text-blue-700 mt-4 hover:text-blue-600"  >
-              View All teachers
-            </p>
+            View All teachers
+          </p>
 
           {allTeachersInfo.length > 0 ? <div className="overflow-x-auto relative  w-full p-1 lg:p-4">
 
-           
+
             <table className="w-full text-sm text-left text-gray-500  mt-2 md:mt-4">
               <thead className="text-xs text-gray-700 uppercase border-b border-r-0 border-collapse bg-gray-50 ">
                 <tr >
@@ -323,19 +323,17 @@ export default function ViewAllTeachers({ allTeachers }) {
 
           {openTeacherDetailsEditModal && (
 
-            <div className=" bg-gray-50 h-screen fixed inset-0 flex items-center justify-center overflow-scroll ">
+            <div className=" bg-gray-50 h-screen fixed inset-0 flex items-start md:items-center lg:items-start justify-center overflow-y-auto z-50 lg:z-auto ">
 
-              <div className="lg:ml-60 bg-teal-500 mt-60 md:mt-44  rounded-lg mb-10">
-                {/* heading */}
+              <div className="bg-teal-500  rounded-lg mb-10  lg:ml-60 mt-4 md:mt-0 lg:mt-4">
                 <div className="text-center font-bold text-xl mt-4 border-b border-solid border-slate-200">
                   <h2 className="mb-2 text-gray-100">Edit the teacher details</h2>
                 </div>
-                {/* body */}
                 <div>
 
                   <div className='p-6  pt-6 flex justify-center w-full'>
 
-                    <div className="block p-6 rounded-lg shadow-lg bg-white lg:w-[50rem] w-80 md:w-[40rem]  mb-12">
+                    <div className="block p-6 rounded-lg shadow-lg bg-white lg:w-[50rem] w-80 md:w-[40rem]  mb-1">
 
                       <div className="form-group mb-6">
                         <label htmlFor="name" className="formLabel inline-block mb-2 text-gray-700">Name</label>
@@ -440,10 +438,9 @@ export default function ViewAllTeachers({ allTeachers }) {
                       </div>
                     </div></div>
                 </div>
-                {/* footer */}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                <div className="flex items-center justify-end p-4 border-t border-solid border-slate-200 rounded-b">
                   <button
-                    className="bg-red-500 text-white hover:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-red-500 text-white hover:bg-red-600 font-bold uppercase text-sm px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => setOpenTeacherDetailsEditModal(false)}
                   >
@@ -451,7 +448,7 @@ export default function ViewAllTeachers({ allTeachers }) {
                   </button>
                   <button
 
-                    className="bg-blue-500 text-white hover:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-blue-500 text-white hover:bg-blue-600 font-bold uppercase text-sm px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => {
                       handleEditTeacherDetails()

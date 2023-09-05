@@ -2,15 +2,22 @@ import Head from "next/head"
 import connectDb from './../middleware/mongoose';
 import Student from '../models/students';
 import Select from './../components/Select';
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthState";
 import Loading from "../components/Loading";
 
 export default function Home({ allStudents }) {
 
-  const { loading } = useContext(AuthContext)
+  const { loading, setLoading } = useContext(AuthContext)
 
+  useEffect(() => {
 
+    return () => {
+      setLoading(true); // Reset the state when the component unmounts.
+    };
+  }, [])
+
+  console.log("loading", loading)
   if (loading) {
     return <Loading />
   }
